@@ -1,0 +1,15 @@
+header {
+  /* height: 8.6vh; */
+  background-color: #4472c4;
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  /* padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem; */
+  padding: 1rem;
+  gap: 1rem;
+}

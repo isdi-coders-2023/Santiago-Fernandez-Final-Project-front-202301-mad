@@ -1,0 +1,19 @@
+.menu__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5rem, 6rem));
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+.menu__option {
+  list-style: none;
+  color: whitesmoke;
+}
+.menu__option:hover {
+  color: grey;
+}
+
+.menu__link {
+  text-decoration: none;
+  color: black;
+}
