@@ -1,27 +1,10 @@
-// import { SyntheticEvent, useMemo } from "react";
 import { SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import "./login.css";
 
-// import { useUsers } from "../../hooks/use-users";
-// import { User } from "../../model/user";
-// import { UsersRepo } from "../../services/user-repo";
-
 export function Login() {
-  // const repo = useMemo(() => new UsersRepo(), []);
-
-  // const { userLogin } = useUsers(repo);
-
   const handlerSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // const formUSer = event.currentTarget;
-
-    // const loginForm: Partial<User> = {
-    //   email: (formUSer.elements[0] as HTMLFormElement).value,
-    //   password: (formUSer.elements[1] as HTMLFormElement).value,
-    // };
-
-    // userLogin(loginForm);
   };
 
   return (
