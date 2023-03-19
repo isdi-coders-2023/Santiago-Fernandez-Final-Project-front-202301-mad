@@ -1,12 +1,14 @@
-export type Role = "admin" | "user";
-
 export type UserStructure = {
   id: string;
   email: string;
   passwd: string;
   firstName: string;
   lastName: string;
-  role: Role;
+  role: string;
   image: string;
   lastLogging: string;
+};
+
+export type UserServerResponseType = {
+  results: [];
 };
