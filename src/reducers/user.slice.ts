@@ -11,7 +11,7 @@ export type UserStateStructure = {
 };
 
 const initialState: UserStateStructure = {
-  userLoggedToken: "",
+  userLoggedToken: "Sin Token",
   userLogged: {} as UserStructure,
   userLoggedMenuOptions: menuOptions,
   userLoggedInitials: "",
@@ -19,18 +19,18 @@ const initialState: UserStateStructure = {
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: "users",
   initialState,
   reducers: {
-    register(userState, action: PayloadAction<UserStructure>) {
-      userState.users = [...userState.users, action.payload];
+    loginToken(state: UserStateStructure, action: PayloadAction<string>) {
+      state.userLoggedToken = action.payload;
     },
-    login(userState, action: PayloadAction<UserStructure>) {
-      userState.userLogged = action.payload;
+    loginUser(state: UserStateStructure, action: PayloadAction<UserStructure>) {
+      state.userLogged = action.payload;
     },
   },
 });
 
-export const { register, login } = userSlice.actions;
+export const { loginToken, loginUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
