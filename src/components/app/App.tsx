@@ -1,4 +1,4 @@
-import { AppRouter } from "../app.router/app.router";
+import { AppRouter } from "../../routers/app.router";
 import { Footer } from "../footer/footer";
 import { Header } from "../header/header";
 import "./App.css";

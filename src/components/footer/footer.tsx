@@ -1,6 +1,6 @@
 import "./footer.css";
 import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
+import { RootState } from "../../store/store";
 
 export function Footer() {
   const token = useSelector((state: RootState) => state.users.userLoggedToken);

@@ -1,7 +1,7 @@
 import { Menu } from "../menu/menu";
 import "./header.css";
 import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
+import { RootState } from "../../store/store";
 
 export function Header() {
   const firstName = useSelector(

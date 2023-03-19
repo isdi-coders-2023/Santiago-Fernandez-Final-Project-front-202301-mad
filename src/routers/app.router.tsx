@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import { menuOptions } from "../../models/menu.model";
-import { Login } from "../login/login";
+import { menuOptions } from "../models/menu.model";
+import { Login } from "../components/login/login";
 
-const Home = lazy(() => import("../../pages/home/home.page"));
+const Home = lazy(() => import("../pages/home/home.page"));
 
 export function AppRouter() {
   return (
