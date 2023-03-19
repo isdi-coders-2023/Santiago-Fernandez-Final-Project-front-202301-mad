@@ -1,11 +1,13 @@
-import { Header } from "../header/header";
-import { Login } from "../login/login";
+// import { Footer } from "../footer/footer";
+// import { Header } from "../header/header";
+// import { Login } from "../login/login";
 
 export function Home() {
   return (
     <>
-      <Header></Header>
+      {/* <Header></Header>
       <Login></Login>
+      <Footer></Footer> */}
     </>
   );
 }

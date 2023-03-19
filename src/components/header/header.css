@@ -1,15 +1,20 @@
-header {
-  /* height: 8.6vh; */
+.header {
+  height: 3vh;
   background-color: #4472c4;
-  color: whitesmoke;
-  font-weight: bold;
-  font-size: 0.6rem;
+  color: white;
   display: flex;
   align-items: center;
-  /* padding-left: 2rem;
-  padding-right: 2rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem; */
   padding: 1rem;
   gap: 1rem;
+}
+
+.header__userLoggedInitials {
+  box-sizing: content-box;
+  font-size: 2rem;
+  border-style: solid;
+  border-radius: 50%;
+}
+
+.header__menu {
+  color: white;
 }
