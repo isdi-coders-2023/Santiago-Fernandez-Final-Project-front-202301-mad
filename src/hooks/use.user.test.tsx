@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-render-in-setup */
 /* eslint-disable testing-library/no-unnecessary-act */
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -14,7 +15,7 @@ describe("Given the useUsers hook", () => {
   beforeEach(async () => {
     mockPayload = {
       email: "test",
-      firstName: "test",
+      passwd: "test",
     } as unknown as UserStructure;
 
     mockRepo = {
@@ -41,17 +42,16 @@ describe("Given the useUsers hook", () => {
   });
 
   describe("when the TestComponent is rendered", () => {
-    test.only("then the button should be in the document", async () => {
+    test("then the button should be in the document", async () => {
       const elements = await screen.findAllByRole("button");
       expect(elements[0]).toBeInTheDocument();
     });
   });
 
   describe("when the LOGIN button of TestComponent is called", () => {
-    test.only("then the userLogin should be called", async () => {
+    test("then the userLogin should be called", async () => {
       const elements = await screen.findAllByRole("button");
-      await act(async () => userEvent.click(elements[1]));
-      expect(mockRepo.loginAtUsersRepo).toHaveBeenCalled();
+      await act(async () => userEvent.click(elements[0]));
       expect(mockRepo.loginAtUsersRepo).toHaveBeenCalled();
     });
   });
