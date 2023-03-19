@@ -1,12 +1,13 @@
 export const menuOptions: Partial<MenuStructure>[] = [
   { label: "Home", path: "/home" },
-  { label: "Inventory", path: "/inventory" },
+  { label: "Dashboard", path: "/dashboard" },
   { label: "Products", path: "/products" },
+  { label: "Movements", path: "/movements" },
 ];
 
 export type MenuStructure = {
   id: string;
-  idUser: string;
+  userRole: string;
   label: string;
   path: string;
 };
@@ -14,12 +15,3 @@ export type MenuStructure = {
 export type MenuResponseStructure = {
   results: MenuStructure[];
 };
-
-// export class MenuModel implements MenuStructure {
-//   constructor(
-//     public id: string,
-//     public idUser: string,
-//     public label: string,
-//     public path: string
-//   ) {}
-// }
