@@ -7,7 +7,7 @@ describe("Given the users repo", () => {
     repo = new UsersRepo();
   });
 
-  describe("when we call the loginAtUsersRepo function", () => {
+  describe("when we call the readTokenAndUser function", () => {
     test("then if the fetch is OK it should return the data", async () => {
       const mockValue = {};
 
@@ -15,12 +15,12 @@ describe("Given the users repo", () => {
         ok: true,
         json: jest.fn().mockResolvedValue(mockValue),
       });
-      const result = await repo.loginAtUsersRepo({}, "/test");
+      const result = await repo.readTokenAndUser({}, "/test");
       expect(result).toEqual(mockValue);
     });
     test("then if the fetch is NOT OK it throw error", async () => {
       global.fetch = jest.fn().mockResolvedValue("Error test");
-      const result = repo.loginAtUsersRepo({ id: "1" }, "/test");
+      const result = repo.readTokenAndUser({ id: "1" }, "/test");
       await expect(result).rejects.toThrow();
     });
   });
