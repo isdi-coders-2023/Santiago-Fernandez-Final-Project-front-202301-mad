@@ -1,0 +1,19 @@
+.productcard {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.productcard__image {
+  /* max-width: 10%;
+  height: auto; */
+  border-radius: 0.5rem;
+  height: 20vh;
+}
+
+.productcard__details {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}

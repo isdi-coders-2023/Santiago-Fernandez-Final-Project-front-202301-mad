@@ -1,20 +1,24 @@
 .header {
-  height: 3vh;
+  height: 10%;
   background-color: #4472c4;
   color: white;
-  display: flex;
+  display: grid;
+  grid-template-columns: 20% 65% 15%;
   align-items: center;
-  padding: 1rem;
-  gap: 1rem;
+  justify-content: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .header__userLoggedInitials {
-  box-sizing: content-box;
-  font-size: 2rem;
-  border-style: solid;
-  border-radius: 50%;
+  background-color: #4472c4;
 }
 
 .header__menu {
+  color: white;
+}
+
+.header__logocompany {
+  background-color: #4472c4;
   color: white;
 }

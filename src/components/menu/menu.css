@@ -1,22 +1,25 @@
+.menu__container {
+}
+
+.menu__nav {
+}
+
 .menu__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(5rem, 6rem));
-  gap: 0.2rem;
-  padding: 0;
-  margin: 0;
-  font-size: 0.5rem;
+  display: flex;
+  justify-content: space-around;
 }
 .menu__option {
   list-style: none;
-  color: whitesmoke;
-}
-.menu__option:hover {
-  color: grey;
+  color: white;
 }
 
 .menu__link {
   text-decoration: none;
   color: white;
-  padding: 0;
-  align-items: flex-start;
+  padding: 0.05rem;
+  font-size: 1em;
+}
+.menu__link:hover {
+  color: rgb(2, 2, 32);
+  text-decoration: none;
 }

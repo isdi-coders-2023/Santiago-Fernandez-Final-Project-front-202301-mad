@@ -1,14 +1,23 @@
 import { SyntheticEvent, useMemo } from "react";
-import { Link } from "react-router-dom";
+// import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useProducts } from "../../hooks/use.products";
 import { useUsers } from "../../hooks/use.users";
 import { UserStructure } from "../../models/user.model";
+import { ProductsRepo } from "../../services/repositories/product.repo";
 import { UsersRepo } from "../../services/repositories/user.repo";
 import "./login.css";
 
 export function Login() {
-  const repo = useMemo(() => new UsersRepo(), []);
+  const repoUser = useMemo(() => new UsersRepo(), []);
+  const repoProduct = useMemo(() => new ProductsRepo(), []);
+  // Without memonization: const repo = new UsersRepo();
 
-  const { userLogin } = useUsers(repo);
+  const navigate = useNavigate();
+
+  const { userLogin } = useUsers(repoUser);
+  const { gallery } = useProducts(repoProduct);
+
   const handlerSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -20,34 +29,39 @@ export function Login() {
     };
 
     userLogin(loginForm);
+    gallery();
+
+    navigate("/products");
   };
   return (
     <div className="login">
       <form onSubmit={handlerSubmit} className="login__form">
         <h1 className="login__title">Log In to ERP</h1>
         <label className="login__label">
-          <div className="login__label">Email</div>
+          <div className="login__label">Email sfdezlop@gmail.com</div>
           <input
             type="email"
             name="email"
             placeholder="Enter your corporative email address"
             className="login__input"
+            autoComplete=""
             required
           />
         </label>
         <label className="login__label">
-          <div className="login__label"> Password</div>
+          <div className="login__label"> Password santiago</div>
           <input
             type="password"
             name="password"
             placeholder="Password"
             className="login__input"
+            autoComplete=""
             required
           />
         </label>
         <div className="login__keepCheckbox">
           <label>
-            <input type="checkbox" id="loginKeepCheckbox" />
+            <input type="checkbox" />
             Keep me logged
           </label>
         </div>
