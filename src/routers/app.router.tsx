@@ -1,33 +1,33 @@
 import { Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import { menuOptions } from "../models/menu.model";
+import { MenuOption } from "../components/menu/menu";
 import { Login } from "../components/login/login";
 
 const HomePage = lazy(() => import("../pages/home/home.page"));
-const InventoryPage = lazy(() => import("../pages/dashboard/dashboard.page"));
-const ProductsPage = lazy(() => import("../pages/products/products.page"));
 const DashboardPage = lazy(() => import("../pages/dashboard/dashboard.page"));
+const ProductsPage = lazy(() => import("../pages/products/products.page"));
+const MovementsPage = lazy(() => import("../pages/movements/movements.page"));
 
-export function AppRouter(options = { menuOptions }) {
+export type AppRouterProps = {
+  options: MenuOption[];
+};
+export function AppRouter({ options }: AppRouterProps) {
   return (
     <Suspense>
       <Routes>
-        <Route path={"/"} element={<Login></Login>}></Route>
+        <Route path={"*"} element={<Login></Login>}></Route>
+        <Route path={options[0].path} element={<HomePage></HomePage>}></Route>
         <Route
-          path={menuOptions[0].path}
-          element={<HomePage></HomePage>}
+          path={options[1].path}
+          element={<DashboardPage></DashboardPage>}
         ></Route>
         <Route
-          path={menuOptions[1].path}
-          element={<InventoryPage></InventoryPage>}
-        ></Route>
-        <Route
-          path={menuOptions[2].path}
+          path={options[2].path}
           element={<ProductsPage></ProductsPage>}
         ></Route>
         <Route
-          path={menuOptions[3].path}
-          element={<DashboardPage></DashboardPage>}
+          path={options[3].path}
+          element={<MovementsPage></MovementsPage>}
         ></Route>
       </Routes>
     </Suspense>
