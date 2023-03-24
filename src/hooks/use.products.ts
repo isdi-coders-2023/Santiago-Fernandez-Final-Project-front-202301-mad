@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from "../store/store";
 import { loadGallery, loadCount } from "../reducers/product.slice";
 
 export function useProducts(repo: ProductsRepo) {
+  // PENDIENTE DE RESOLVER LA RECUPERACIÓN DEL TOKEN DEL ESTADO EN VEZ DEL LOCALSTORAGE
   const productState = useSelector((state: RootState) => state.productState);
   // const userState = useSelector((state: RootState) => state.userState);
   const dispatch = useDispatch<AppDispatch>();

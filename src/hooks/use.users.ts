@@ -2,15 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserStructure } from "../models/user.model";
 import { UsersRepo } from "../services/repositories/user.repo";
 import { AppDispatch, RootState } from "../store/store";
-import { loginGallery, loginToken, loginUser } from "../reducers/user.slice";
+import {
+  initialState,
+  loginGallery,
+  loginToken,
+  loginUser,
+} from "../reducers/user.slice";
 
 export function useUsers(repo: UsersRepo) {
   const userLoggedToken = useSelector(
     (state: RootState) => state.userState.userLoggedToken
   );
-  // );
-  // const userLogged = useSelector((state: RootState) => state.userState);
-  // const usersGallery = useSelector((state: RootState) => state.userState);
+
+  const initialStateToken = initialState.userLoggedToken;
+
   const dispatch = useDispatch<AppDispatch>();
 
   const userLogin = async (loginForm: Partial<UserStructure>) => {
@@ -23,7 +28,7 @@ export function useUsers(repo: UsersRepo) {
       await dispatch(loginToken(serverLoginResponse.results[0]));
       await dispatch(loginUser(serverLoginResponse.results[1]));
 
-      if (userLoggedToken !== "Sin Token") {
+      if (userLoggedToken !== initialStateToken) {
         localStorage.setItem("token", userLoggedToken);
       }
       console.log("Token in userState: ", userLoggedToken);
