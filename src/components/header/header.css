@@ -1,5 +1,5 @@
 .header {
-  height: 10%;
+  height: 12vh;
   background-color: #4472c4;
   color: white;
   display: grid;
@@ -8,6 +8,16 @@
   justify-content: center;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.header__logoCompany a {
+  text-decoration: none;
+  color: white;
+}
+
+.header__logoCompany a:hover {
+  text-decoration: none;
+  color: rgb(2, 2, 32);
 }
 
 .header__userLoggedInitials {

@@ -20,8 +20,8 @@ const initialState: ProductStateStructure = {
   filter: {
     filterField: "brand",
     filterValue: "Flores de Bach",
-    filterSet: 2,
-    filterRecordsPerSet: 10,
+    filterSet: 1,
+    filterRecordsPerSet: 200,
     orderField: "sku",
   },
   page: 1,

@@ -7,6 +7,7 @@ const HomePage = lazy(() => import("../pages/home/home.page"));
 const DashboardPage = lazy(() => import("../pages/dashboard/dashboard.page"));
 const ProductsPage = lazy(() => import("../pages/products/products.page"));
 const MovementsPage = lazy(() => import("../pages/movements/movements.page"));
+const DetailPage = lazy(() => import("../pages/detail/detail.page"));
 
 export type AppRouterProps = {
   options: MenuOption[];
@@ -29,6 +30,7 @@ export function AppRouter({ options }: AppRouterProps) {
           path={options[3].path}
           element={<MovementsPage></MovementsPage>}
         ></Route>
+        <Route path="/detail" element={<DetailPage></DetailPage>}></Route>
       </Routes>
     </Suspense>
   );

@@ -80,4 +80,26 @@ export class ProductsRepo {
 
     return data;
   }
+
+  async readDetail(
+    token: string,
+    urlExtraPath: string
+  ): Promise<ProductServerResponseType> {
+    const url = this.url + "/" + urlExtraPath;
+
+    const resp = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (!resp.ok)
+      throw new Error(
+        `Error http reading product detail: ${resp.status} ${resp.statusText}`
+      );
+
+    const data = await resp.json();
+
+    return data;
+  }
 }

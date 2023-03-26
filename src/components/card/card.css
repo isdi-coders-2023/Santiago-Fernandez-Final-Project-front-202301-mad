@@ -1,19 +1,20 @@
 .productcard {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
+  width: calc(33.33% - 1rem);
+  max-width: 30%; /* Ancho máximo de cada tarjeta */
+  height: 30%; /* Altura fija de cada tarjeta */
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-color: black;
+  text-align: left;
+  text-decoration: none;
+  list-style: none;
+  object-fit: fill;
+  justify-content: center;
 }
-
 .productcard__image {
-  /* max-width: 10%;
-  height: auto; */
-  border-radius: 0.5rem;
-  height: 20vh;
-}
+  /* width: 33%; */
+  height: 25vh; /* Ajustar el tamaño de la imagen para que se ajuste a la altura de la tarjeta */
+  object-fit: scale-down;
 
-.productcard__details {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
+  margin-bottom: 1rem;
 }

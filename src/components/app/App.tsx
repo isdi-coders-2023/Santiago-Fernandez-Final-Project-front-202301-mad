@@ -13,7 +13,7 @@ export function App() {
         <Header></Header>
         <AppRouter options={menuOptions}></AppRouter> {/* <Login></Login> */}
         <Footer></Footer>
-      </div>{" "}
+      </div>
     </>
   );
 }

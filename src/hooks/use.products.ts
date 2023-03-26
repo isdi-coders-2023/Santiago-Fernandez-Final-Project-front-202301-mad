@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ProductsRepo } from "../services/repositories/product.repo";
 import { AppDispatch, RootState } from "../store/store";
-import { loadGallery, loadCount } from "../reducers/product.slice";
+import { loadGallery, loadCount, loadDetail } from "../reducers/product.slice";
 
 export function useProducts(repo: ProductsRepo) {
   // PENDIENTE DE RESOLVER LA RECUPERACIÓN DEL TOKEN DEL ESTADO EN VEZ DEL LOCALSTORAGE
@@ -40,9 +40,25 @@ export function useProducts(repo: ProductsRepo) {
     }
   };
 
+  const detail = async (id: string) => {
+    const serverDetailResponse: any = await repo.readDetail(
+      // userState.userLoggedToken,
+      tokenAtLocalStorage,
+      "products/" + id
+    );
+
+    try {
+      await dispatch(loadDetail(serverDetailResponse.results));
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
   return {
     loadGallery,
     loadCount,
+    loadDetail,
     gallery,
+    detail,
   };
 }

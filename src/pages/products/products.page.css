@@ -1,0 +1,15 @@
+.productsPage__container {
+  background-color: white;
+}
+
+.productsPage__list {
+  border-color: black;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+
+  margin: 0 auto; /* Centrar la galería en la página */
+}

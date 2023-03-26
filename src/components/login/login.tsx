@@ -29,7 +29,7 @@ export function Login() {
     };
 
     userLogin(loginForm);
-    gallery();
+    // gallery();
 
     navigate("/products");
   };
