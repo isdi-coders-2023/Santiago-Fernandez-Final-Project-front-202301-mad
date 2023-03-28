@@ -1,0 +1,17 @@
+.filter__form {
+  display: flex;
+  gap: 2vh;
+  align-items: center;
+  font-size: 2vh;
+  color: white;
+  padding: 1vh;
+}
+
+.filter__option {
+  font-size: 2vh;
+}
+
+.filter__button {
+  font-size: 2vh;
+  padding: 0.5vh;
+}

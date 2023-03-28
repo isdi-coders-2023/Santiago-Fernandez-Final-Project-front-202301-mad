@@ -22,7 +22,7 @@
 .productsPageCard {
   width: calc(20% - 0.1vh);
   border-style: solid;
-  border-color: lightgrey;
+  border-color: #4472c4;
   max-width: 20%; /* Ancho máximo de cada tarjeta */
   height: 30%; /* Altura fija de cada tarjeta */
   padding: 0.5rem;

@@ -10,6 +10,7 @@ export type ProductStateStructure = {
     filterRecordsPerSet: number;
     orderField: string;
   };
+  filterOptions: string[];
   page: number;
   count: number;
   detailCredentials: string;
@@ -20,11 +21,12 @@ const initialState: ProductStateStructure = {
   filteredGallery: [],
   filter: {
     filterField: "brand",
-    filterValue: "Smileat",
+    filterValue: "Yogi Tea",
     filterSet: 1,
-    filterRecordsPerSet: 6,
+    filterRecordsPerSet: 30,
     orderField: "sku",
   },
+  filterOptions: ["Yogi Tea"],
   page: 1,
   count: 25,
   detailCredentials: "sku/unknown",
@@ -46,6 +48,9 @@ export const productSlice = createSlice({
       action: PayloadAction<typeof initialState.filter>
     ) {
       state.filter = action.payload;
+    },
+    loadFilterOptions(state: ProductStateStructure, action: PayloadAction<[]>) {
+      state.filterOptions = action.payload;
     },
     loadPage(state: ProductStateStructure, action: PayloadAction<number>) {
       state.page = action.payload;
@@ -75,6 +80,7 @@ export const {
   loadCount,
   loadDetailCredentials,
   loadDetail,
+  loadFilterOptions,
 } = productSlice.actions;
 
 export const productReducer = productSlice.reducer;

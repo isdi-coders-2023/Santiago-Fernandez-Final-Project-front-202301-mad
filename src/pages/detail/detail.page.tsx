@@ -32,7 +32,7 @@ export default function DetailPage() {
     <>
       <header className="detail__header">Detalle del Producto</header>
 
-      <ul>
+      <article>
         {detailProductData.map((item) => (
           <div className="detail__container">
             <div className="detail__imageContainer">
@@ -42,23 +42,8 @@ export default function DetailPage() {
                 alt={`${item.shortDescription} card`}
               ></img>
             </div>
-            <div className="detail__shortDescription">
-              Descripción en tarifa:
-            </div>
-            <input
-              type="text"
-              className="detail__shortDescriptionInput"
-              placeholder={item.shortDescription}
-            ></input>
-            <div className="detail__longDescription">
-              Descripción en catálogo:
-            </div>
-            <input
-              type="text"
-              className="detail__longDescriptionInput"
-              placeholder={item.longDescription}
-            ></input>
-            <div className="detail__details">
+            {/* ______ */}
+            <div className="detail__dataContainer">
               <div>Marca: {item.brand}</div>
               <div>SKU: {item.sku}</div>
               <div>EAN: {item.ean}</div>
@@ -72,15 +57,38 @@ export default function DetailPage() {
                 )[0].firstName
               : " " + detailProductData[0].userCreatorEmail}
           </div> */}
-              <div className="detail__buttons">
-                <button className="detail__addButton">Añadir</button>
-                <button className="detail__updateButton">Editar</button>
-                <button className="detail__deleteButton">Borrar</button>
+            </div>
+            {/* ______ */}
+            <div className="detail__descriptionContainer">
+              <div className="detail__shortDescription">
+                Descripción en tarifa:
+              </div>
+              <input
+                type="text"
+                className="detail__shortDescriptionInput"
+                placeholder={item.shortDescription}
+              ></input>
+              <div className="detail__longDescription">
+                Descripción en catálogo:
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  className="detail__longDescriptionInput"
+                  placeholder={item.longDescription}
+                ></input>{" "}
               </div>
             </div>
           </div>
         ))}
-      </ul>
+      </article>
+
+      <div className="detail__buttons">
+        <button className="detail__addButton">Añadir</button>
+        <button className="detail__updateButton">Editar</button>
+        <button className="detail__deleteButton">Borrar</button>
+      </div>
     </>
   );
 }

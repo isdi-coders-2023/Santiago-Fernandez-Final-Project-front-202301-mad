@@ -6,6 +6,8 @@ import {
   loadCount,
   loadDetail,
   loadDetailCredentials,
+  loadFilterOptions,
+  loadFilter,
 } from "../reducers/product.slice";
 
 export function useProducts(repo: ProductsRepo) {
@@ -50,6 +52,19 @@ export function useProducts(repo: ProductsRepo) {
     } catch (error) {
       console.error((error as Error).message);
     }
+
+    try {
+      const serverCountResponse: any = await repo.readGroupsByField(
+        // userState.userLoggedToken,
+        tokenAtLocalStorage,
+        "products/group-values-per-field",
+        "brand"
+      );
+
+      await dispatch(loadFilterOptions(serverCountResponse.results));
+    } catch (error) {
+      console.error((error as Error).message);
+    }
   };
 
   const detailCredentials = async (credential: string) => {
@@ -70,12 +85,22 @@ export function useProducts(repo: ProductsRepo) {
     }
   };
 
+  const filter = async (filter: any) => {
+    try {
+      await dispatch(loadFilter(filter));
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
   return {
     loadGallery,
     loadCount,
     loadDetail,
+    loadFilterOptions,
     gallery,
     detailCredentials,
     detail,
+    filter,
   };
 }

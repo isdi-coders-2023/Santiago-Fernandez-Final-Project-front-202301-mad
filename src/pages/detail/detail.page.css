@@ -12,6 +12,8 @@
 }
 
 .detail__container {
+  display: flex;
+  justify-content: space-around;
   width: calc(100%);
   background-color: white;
   padding: 1rem;
@@ -26,6 +28,14 @@
   object-fit: scale-down;
 
   margin-bottom: 1rem;
+}
+
+.detail__dataContainer div {
+  padding: 0.25rem;
+}
+
+.detail__descriptionContainer div {
+  padding: 0.25rem;
 }
 
 .detail__buttons {

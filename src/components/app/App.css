@@ -3,3 +3,8 @@
   background-color: #949292;
   box-sizing: border-box;
 }
+
+.approuter_container {
+  min-height: calc(100vh - 24vh);
+  /* max-height: calc(100vh - 24vh); */
+}

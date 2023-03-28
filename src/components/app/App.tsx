@@ -11,7 +11,9 @@ export function App() {
     <>
       <div className="App">
         <Header></Header>
-        <AppRouter options={menuOptions}></AppRouter> {/* <Login></Login> */}
+        <div className="approuter_container">
+          <AppRouter options={menuOptions}></AppRouter> {/* <Login></Login> */}
+        </div>
         <Footer></Footer>
       </div>
     </>

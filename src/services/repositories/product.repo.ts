@@ -102,4 +102,29 @@ export class ProductsRepo {
 
     return data;
   }
+
+  async readGroupsByField(
+    token: string,
+    urlExtraPath: string,
+    field: string
+  ): Promise<ProductServerResponseType> {
+    const url = this.url + "/" + urlExtraPath + "/" + field;
+    console.log(url);
+
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    if (!resp.ok)
+      throw new Error(
+        `Error http reading product detail: ${resp.status} ${resp.statusText}`
+      );
+
+    const data = await resp.json();
+    console.log(data);
+    return data;
+  }
 }
