@@ -12,21 +12,23 @@ export type ProductStateStructure = {
   };
   page: number;
   count: number;
-  detail: ProductStructure;
+  detailCredentials: string;
+  detail: ProductStructure[];
 };
 
 const initialState: ProductStateStructure = {
   filteredGallery: [],
   filter: {
     filterField: "brand",
-    filterValue: "Flores de Bach",
+    filterValue: "Smileat",
     filterSet: 1,
-    filterRecordsPerSet: 200,
+    filterRecordsPerSet: 6,
     orderField: "sku",
   },
   page: 1,
-  count: 10,
-  detail: {} as ProductStructure,
+  count: 25,
+  detailCredentials: "sku/unknown",
+  detail: [],
 };
 
 export const productSlice = createSlice({
@@ -51,16 +53,28 @@ export const productSlice = createSlice({
     loadCount(state: ProductStateStructure, action: PayloadAction<number>) {
       state.count = action.payload;
     },
+    loadDetailCredentials(
+      state: ProductStateStructure,
+      action: PayloadAction<string>
+    ) {
+      state.detailCredentials = action.payload;
+    },
     loadDetail(
       state: ProductStateStructure,
-      action: PayloadAction<ProductStructure>
+      action: PayloadAction<ProductStructure[]>
     ) {
       state.detail = action.payload;
     },
   },
 });
 
-export const { loadGallery, loadFilter, loadPage, loadCount, loadDetail } =
-  productSlice.actions;
+export const {
+  loadGallery,
+  loadFilter,
+  loadPage,
+  loadCount,
+  loadDetailCredentials,
+  loadDetail,
+} = productSlice.actions;
 
 export const productReducer = productSlice.reducer;

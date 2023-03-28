@@ -54,4 +54,28 @@ export class UsersRepo {
 
     return data;
   }
+
+  async loginWithToken(
+    tokenAtLocalStorage: string,
+    urlExtraPath: string
+  ): Promise<UserServerResponseType> {
+    const url = this.url + "/" + urlExtraPath;
+
+    const resp = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ token: tokenAtLocalStorage }),
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + tokenAtLocalStorage,
+      },
+    });
+    if (!resp.ok)
+      throw new Error(
+        `Error http trying to login with token: ${resp.status} ${resp.statusText}`
+      );
+
+    const data = await resp.json();
+
+    return data;
+  }
 }

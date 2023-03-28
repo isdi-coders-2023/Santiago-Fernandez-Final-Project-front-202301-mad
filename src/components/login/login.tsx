@@ -1,4 +1,4 @@
-import { SyntheticEvent, useMemo } from "react";
+import { SyntheticEvent, useEffect, useMemo } from "react";
 // import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useProducts } from "../../hooks/use.products";
@@ -15,8 +15,21 @@ export function Login() {
 
   const navigate = useNavigate();
 
-  const { userLogin } = useUsers(repoUser);
+  const { userLogin, userLoginWithToken } = useUsers(repoUser);
   const { gallery } = useProducts(repoProduct);
+
+  useEffect(() => {
+    if (
+      localStorage.tokenERP.split(".")[0] ===
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+    ) {
+      userLoginWithToken(localStorage.tokenERP, "users/login-with-token");
+      if (localStorage.tokenERP === "Sin Token") navigate("/");
+      navigate("/home");
+    }
+  }, []);
+
+  //Para settear localStorage.setItem('tokenERP','Sin Token')
 
   const handlerSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,7 +44,7 @@ export function Login() {
     userLogin(loginForm);
     // gallery();
 
-    navigate("/products");
+    navigate("/home");
   };
   return (
     <div className="login">

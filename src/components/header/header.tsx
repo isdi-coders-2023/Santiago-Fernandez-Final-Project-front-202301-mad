@@ -12,9 +12,9 @@ export function Header() {
   const repoUser = new UsersRepo();
   const { userLogin } = useUsers(repoUser);
 
-  useEffect(() => {
-    userLogin({});
-  }, []);
+  // useEffect(() => {
+  //   userLogin({});
+  // }, []);
 
   const firstName = useSelector(
     (state: RootState) => state.userState.userLogged.firstName

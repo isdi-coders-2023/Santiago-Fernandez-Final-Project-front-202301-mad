@@ -1,3 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.detail__header {
+  background-color: white;
+  color: #4472c4;
+  text-align: left;
+  padding: 1vh;
+}
+
 .detail__container {
   width: calc(100%);
   background-color: white;

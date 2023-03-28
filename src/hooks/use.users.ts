@@ -29,10 +29,10 @@ export function useUsers(repo: UsersRepo) {
       await dispatch(loginUser(serverLoginResponse.results[1]));
 
       if (userLoggedToken !== initialStateToken) {
-        localStorage.setItem("token", userLoggedToken);
+        localStorage.setItem("tokenERP", userLoggedToken);
       }
       console.log("Token in userState: ", userLoggedToken);
-      console.log("Token in localStorage: ", localStorage.token);
+      console.log("Token in localStorage: ", localStorage.tokenERP);
       const serverGalleryResponse: any = await repo.readGallery(
         localStorage.token,
         "users"
@@ -43,10 +43,40 @@ export function useUsers(repo: UsersRepo) {
     }
   };
 
+  const userLoginWithToken = async (
+    tokenAtLocalStorage: string,
+    urlExtraPath: string
+  ) => {
+    try {
+      const serverResponse: any = await repo.loginWithToken(
+        tokenAtLocalStorage,
+        urlExtraPath
+      );
+
+      await dispatch(loginToken(serverResponse.results[0]));
+      await dispatch(loginUser(serverResponse.results[1]));
+
+      if (userLoggedToken !== initialStateToken) {
+        await localStorage.setItem("tokenERP", userLoggedToken);
+      }
+      console.log("Token in userState: ", userLoggedToken);
+      console.log("Token in localStorage: ", localStorage.tokenERP);
+      // const serverGalleryResponse: any = await repo.readGallery(
+      //   localStorage.token,
+      //   "users"
+      // );
+      // await dispatch(loginGallery(serverGalleryResponse.results));
+    } catch (error) {
+      localStorage.setItem("tokenERP", "Sin Token");
+      console.error((error as Error).message);
+    }
+  };
+
   return {
     loginToken,
     loginUser,
     loginGallery,
     userLogin,
+    userLoginWithToken,
   };
 }

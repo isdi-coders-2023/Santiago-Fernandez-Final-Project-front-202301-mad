@@ -8,8 +8,8 @@ export type MenuOption = {
 export const menuOptions: MenuOption[] = [
   { label: "Home", path: "/home" },
   { label: "Dashboard", path: "/dashboard" },
-  { label: "Products", path: "/products" },
-  { label: "Movements", path: "/movements" },
+  { label: "Productos", path: "/products" },
+  { label: "Movimientos", path: "/movements" },
 ];
 
 export type MenuProps = {

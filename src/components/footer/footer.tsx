@@ -22,6 +22,7 @@ export function Footer() {
       </p>
       <p>{"Name: " + firstName + " " + lastName}</p>
       {/* <p>{errorToShow}</p> */}
+      <p>localStorage.setItem('tokenERP','Sin Token')</p>
     </div>
   );
 }

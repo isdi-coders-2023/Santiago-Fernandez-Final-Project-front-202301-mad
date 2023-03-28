@@ -1,15 +1,61 @@
+.productsPage__header {
+  background-color: white;
+  color: #4472c4;
+  text-align: left;
+  padding: 1vh;
+}
 .productsPage__container {
   background-color: white;
 }
 
 .productsPage__list {
   border-color: black;
-  background-color: white;
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 1rem;
-
   margin: 0 auto; /* Centrar la galería en la página */
+}
+
+.productsPageCard {
+  width: calc(20% - 0.1vh);
+  border-style: solid;
+  border-color: lightgrey;
+  max-width: 20%; /* Ancho máximo de cada tarjeta */
+  height: 30%; /* Altura fija de cada tarjeta */
+  padding: 0.5rem;
+  text-align: left;
+  text-decoration: none;
+  list-style: none;
+  object-fit: fill;
+  justify-content: center;
+}
+
+.productsPageCard__imageContainer {
+  text-align: center;
+}
+.productsPageCard__image {
+  height: 20vh;
+  margin-bottom: 1rem;
+}
+
+.productsPageCard__shortDescription {
+  font-weight: bold;
+}
+
+.productsPageCard__skuContainer {
+  display: flex;
+}
+.productsPageCard__sku {
+  text-decoration: underline;
+  color: rgb(2, 2, 32);
+  font-weight: bold;
+}
+
+.productsPageCard__sku:hover {
+  text-decoration: underline;
+
+  color: #4472c4;
 }

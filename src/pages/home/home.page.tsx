@@ -7,32 +7,50 @@ import { ProductStructure } from "../../models/product.model";
 import { RootState } from "../../store/store";
 import { Card } from "../../components/card/card";
 import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   // const repo = useMemo(() => new ProductsRepo(), []);
   // const { gallery, loadCount, loadGallery } = useProducts(repo);
-  const galleryArray = useSelector(
-    (state: RootState) => state.productState.filteredGallery
+
+  // const galleryArray = useSelector(
+  //   (state: RootState) => state.productState.filteredGallery
+  // );
+  // useEffect(() => {}, [galleryArray]);
+
+  const userLoggedObject = useSelector(
+    (state: RootState) => state.userState.userLogged
   );
 
-  // const firstName = useSelector(
-  //   (state: RootState) => state.userState.userLogged.firstName
-  // );
-
+  const userLoggedToken = useSelector(
+    (state: RootState) => state.userState.userLoggedToken
+  );
+  const navigate = useNavigate();
   // useEffect(() => {
-  //   gallery();
-  // }, [galleryArray]);
-
-  useEffect(() => {}, [galleryArray]);
+  //   if (userLoggedObject.firstName === undefined) navigate("/");
+  // }, []);
 
   return (
     <>
-      <header>Home Page</header>
-      <ul className="homepage__list">
+      <header>Bienvenido a ERP</header>
+      {/* <ul className="homepage__list">
         {galleryArray.map((item: Partial<ProductStructure>) => (
           <Card key={item.id} product={item}></Card>
         ))}
-      </ul>
+      </ul> */}
+      <section className="userLogged_profile">
+        <h2>
+          Nombre: {userLoggedObject.firstName + " " + userLoggedObject.lastName}
+        </h2>
+        <p>Email: {userLoggedObject.email}</p>
+        <p>Rol: {userLoggedObject.role}</p>
+        <p>Última Conexión: {userLoggedObject.lastLogging}</p>
+        <p>Token en estado del usuario: {userLoggedToken}</p>
+        <p>Token en localStorage: {localStorage.getItem("tokenERP")}</p>
+
+        <article className="userLogged_menuOptions"></article>
+        <article className="userLogged_permissions"></article>
+      </section>
     </>
   );
 }

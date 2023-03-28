@@ -6,65 +6,81 @@ import { ProductsRepo } from "../../services/repositories/product.repo";
 import { RootState } from "../../store/store";
 
 export default function DetailPage() {
-  const repoProduct = useMemo(() => new ProductsRepo(), []);
-  const { detail } = useProducts(repoProduct);
+  // const repoProduct = useMemo(() => new ProductsRepo(), []);
+  // const { detail } = useProducts(repoProduct);
+  console.log("hola en DetailPage");
+  // const userCreatorFullNames = useSelector(
+  //   (state: RootState) => state.userState.usersGallery
+  // );
 
-  useEffect(() => {
-    detail("641900273cdabdb1c8fd178d");
-  }, []);
-
-  const userCreatorFullNames = useSelector(
-    (state: RootState) => state.userState.usersGallery
-  );
-
-  const detailProduct = useSelector(
+  const detailProductData = useSelector(
     (state: RootState) => state.productState.detail
   );
+
+  const detailCredentialsData = useSelector(
+    (state: RootState) => state.productState.detailCredentials
+  );
+  const repoProduct = new ProductsRepo();
+  const { detail } = useProducts(repoProduct);
+  // detail(detailCredentialsData);
+  useEffect(() => {
+    detail(detailCredentialsData);
+    // console.log("hola en UseEffect");
+  }, []);
+
   return (
     <>
-      <header>Detail Page</header>
+      <header className="detail__header">Detalle del Producto</header>
 
-      <div className="detail__container">
-        <div className="detail__imagecontainer">
-          <img
-            className="detail__image"
-            src={detailProduct.image}
-            alt={`${detailProduct.shortDescription} card`}
-          ></img>
-        </div>
-        <div className="detail__shortDescription">Short Description:</div>
-        <input
-          type="text"
-          className="detail__shortDescriptionInput"
-          placeholder={detailProduct.shortDescription}
-        ></input>
-        <div className="detail__longDescription">Long Description:</div>
-        <input
-          type="text"
-          className="detail__longDescriptionInput"
-          placeholder={detailProduct.longDescription}
-        ></input>
-        <div className="detail__details">
-          <div>Brand: {detailProduct.brand}</div>
-          <div>SKU: {detailProduct.sku}</div>
-          <div>EAN: {detailProduct.ean}</div>
-          <div>Cost (€): {detailProduct.costPerUnit}</div>
-          <div>Price (€): {detailProduct.pricePerUnit}</div>
-          <div>
-            Creator:
+      <ul>
+        {detailProductData.map((item) => (
+          <div className="detail__container">
+            <div className="detail__imageContainer">
+              <img
+                className="detail__image"
+                src={item.image}
+                alt={`${item.shortDescription} card`}
+              ></img>
+            </div>
+            <div className="detail__shortDescription">
+              Descripción en tarifa:
+            </div>
+            <input
+              type="text"
+              className="detail__shortDescriptionInput"
+              placeholder={item.shortDescription}
+            ></input>
+            <div className="detail__longDescription">
+              Descripción en catálogo:
+            </div>
+            <input
+              type="text"
+              className="detail__longDescriptionInput"
+              placeholder={item.longDescription}
+            ></input>
+            <div className="detail__details">
+              <div>Marca: {item.brand}</div>
+              <div>SKU: {item.sku}</div>
+              <div>EAN: {item.ean}</div>
+              <div>Coste (€): {item.costPerUnit}</div>
+              <div>Precio (€): {item.pricePerUnit}</div>
+              {/* <div>
+            Creado por:
             {" " + userCreatorFullNames === undefined
               ? userCreatorFullNames.filter(
-                  (item) => item.email === detailProduct.userCreatorEmail
+                  (item) => item.email === detailProductData[0].userCreatorEmail
                 )[0].firstName
-              : " " + detailProduct.userCreatorEmail}
+              : " " + detailProductData[0].userCreatorEmail}
+          </div> */}
+              <div className="detail__buttons">
+                <button className="detail__addButton">Añadir</button>
+                <button className="detail__updateButton">Editar</button>
+                <button className="detail__deleteButton">Borrar</button>
+              </div>
+            </div>
           </div>
-          <div className="detail__buttons">
-            <button className="detail__addbutton">Add</button>
-            <button className="detail__updatebutton">Update</button>
-            <button className="detail__deletebutton">Delete</button>
-          </div>
-        </div>
-      </div>
+        ))}
+      </ul>
     </>
   );
 }

@@ -6,7 +6,7 @@ import { App } from "./components/app/App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
-// import { MemoryRouter as Router } from "react-router-dom";No funciona la generación de rutas fake
+// Import { MemoryRouter as Router } from "react-router-dom"; Con MemoryRouter no funciona la generación de rutas fake
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

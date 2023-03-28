@@ -13,7 +13,13 @@ export type ProductMovementStateStructure = {
   page: number;
   count: number;
   unfilteredCount: number;
-  analytics: {};
+  analytics: {
+    results: [
+      { ActualInventoryCost: [] },
+      { AnnualInventoryCostVariation: [] },
+      { MonthlyInventoryCostVariation: [] }
+    ];
+  };
 };
 
 const initialState: ProductMovementStateStructure = {
@@ -73,7 +79,19 @@ export const productMovementSlice = createSlice({
     },
     loadAnalytics(
       state: ProductMovementStateStructure,
-      action: PayloadAction<{}>
+      action: PayloadAction<{
+        results: [
+          {
+            ActualInventoryCost: [];
+          },
+          {
+            AnnualInventoryCostVariation: [];
+          },
+          {
+            MonthlyInventoryCostVariation: [];
+          }
+        ];
+      }>
     ) {
       state.analytics = action.payload;
     },
