@@ -8,6 +8,7 @@ import {
   loadDetailCredentials,
   loadFilterOptions,
   loadFilter,
+  loadPage,
 } from "../reducers/product.slice";
 
 export function useProducts(repo: ProductsRepo) {
@@ -93,14 +94,24 @@ export function useProducts(repo: ProductsRepo) {
     }
   };
 
+  const pagination = async (page: number) => {
+    try {
+      await dispatch(loadPage(page));
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
   return {
     loadGallery,
     loadCount,
     loadDetail,
     loadFilterOptions,
+    loadPage,
     gallery,
     detailCredentials,
     detail,
     filter,
+    pagination,
   };
 }

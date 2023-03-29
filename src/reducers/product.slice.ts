@@ -21,10 +21,10 @@ const initialState: ProductStateStructure = {
   filteredGallery: [],
   filter: {
     filterField: "brand",
-    filterValue: "Yogi Tea",
+    filterValue: "Flores de Bach",
     filterSet: 1,
     filterRecordsPerSet: 30,
-    orderField: "sku",
+    orderField: "shortDescription",
   },
   filterOptions: ["Yogi Tea"],
   page: 1,

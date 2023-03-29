@@ -1,10 +1,17 @@
+.filter__forms {
+  display: flex;
+  /* flex-direction: row; */
+  /* flex-direction: row-reverse; */
+}
+
 .filter__form {
   display: flex;
-  gap: 2vh;
+  gap: 3vh;
   align-items: center;
+  justify-items: center;
   font-size: 2vh;
   color: white;
-  padding: 1vh;
+  padding: 0.5vh;
 }
 
 .filter__option {
@@ -13,5 +20,15 @@
 
 .filter__button {
   font-size: 2vh;
+  padding: 0.5vh;
+}
+
+.pagination__form {
+  display: flex;
+  gap: 3vh;
+  align-items: center;
+  justify-items: center;
+  font-size: 2vh;
+  color: white;
   padding: 0.5vh;
 }

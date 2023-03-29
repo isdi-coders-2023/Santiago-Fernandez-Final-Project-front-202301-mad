@@ -32,25 +32,28 @@ export default function HomePage() {
 
   return (
     <>
-      <header>Bienvenido a ERP</header>
-      {/* <ul className="homepage__list">
+      <div className="homePage_container">
+        <header>Bienvenido a ERP</header>
+        {/* <ul className="homepage__list">
         {galleryArray.map((item: Partial<ProductStructure>) => (
           <Card key={item.id} product={item}></Card>
         ))}
       </ul> */}
-      <section className="userLogged_profile">
-        <h2>
-          Nombre: {userLoggedObject.firstName + " " + userLoggedObject.lastName}
-        </h2>
-        <p>Email: {userLoggedObject.email}</p>
-        <p>Rol: {userLoggedObject.role}</p>
-        <p>Última Conexión: {userLoggedObject.lastLogging}</p>
-        <p>Token en estado del usuario: {userLoggedToken}</p>
-        <p>Token en localStorage: {localStorage.getItem("tokenERP")}</p>
+        <section className="userLogged_profile">
+          <h2>
+            Nombre:{" "}
+            {userLoggedObject.firstName + " " + userLoggedObject.lastName}
+          </h2>
+          <p>Email: {userLoggedObject.email}</p>
+          <p>Rol: {userLoggedObject.role}</p>
+          <p>Última Conexión: {userLoggedObject.lastLogging}</p>
+          <p>Token en estado del usuario: {userLoggedToken}</p>
+          <p>Token en localStorage: {localStorage.getItem("tokenERP")}</p>
 
-        <article className="userLogged_menuOptions"></article>
-        <article className="userLogged_permissions"></article>
-      </section>
+          <article className="userLogged_menuOptions"></article>
+          <article className="userLogged_permissions"></article>
+        </section>
+      </div>
     </>
   );
 }

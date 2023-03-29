@@ -27,10 +27,13 @@ export function Header() {
           <Link to="/">ERP</Link>
         </h1>
       </div>
-      <div className="header__menu">
+      <nav className="header__menu">
         <Menu options={menuOptions}></Menu>
+      </nav>
+      <div className="header__initialAndLogout">
+        <div className="header__userLoggedInitials">{firstName}</div>
+        <div className="header__logout">logout</div>
       </div>
-      <div className="header__userLoggedInitials">{firstName}</div>
     </header>
   );
 }

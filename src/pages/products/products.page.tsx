@@ -10,18 +10,25 @@ import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { render } from "react-dom";
 import { createRoot } from "react-dom/client";
+import { Filter } from "./filter";
 
 export default function ProductsPage() {
   const galleryArray = useSelector(
     (state: RootState) => state.productState.filteredGallery
   );
 
+  const filterObject = useSelector(
+    (state: RootState) => state.productState.filter
+  );
+
+  const pageNumber = useSelector((state: RootState) => state.productState.page);
+
   const repoProduct = new ProductsRepo();
   const { gallery } = useProducts(repoProduct);
 
   useEffect(() => {
     gallery();
-  }, []);
+  }, [filterObject, pageNumber]);
 
   const { detail } = useProducts(repoProduct);
   const { detailCredentials } = useProducts(repoProduct);
@@ -43,7 +50,8 @@ export default function ProductsPage() {
 
   return (
     <>
-      <header className="productsPage__header">Galería de Productos</header>
+      {/* <header className="productsPage__header">Galería de Productos</header> */}
+      <Filter></Filter>
       <div className="productsPage__container">
         <ul className="productsPage__list">
           {galleryArray.map((item: Partial<ProductStructure>) => (
