@@ -34,9 +34,13 @@ export const userSlice = createSlice({
     ) {
       state.usersGallery = action.payload;
     },
+    logoutToken(state: UserStateStructure, action: PayloadAction<string>) {
+      state.userLoggedToken = action.payload;
+    },
   },
 });
 
-export const { loginToken, loginUser, loginGallery } = userSlice.actions;
+export const { loginToken, loginUser, loginGallery, logoutToken } =
+  userSlice.actions;
 
 export const userReducer = userSlice.reducer;

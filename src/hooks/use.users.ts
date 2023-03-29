@@ -7,6 +7,7 @@ import {
   loginGallery,
   loginToken,
   loginUser,
+  logoutToken,
 } from "../reducers/user.slice";
 
 export function useUsers(repo: UsersRepo) {
@@ -72,11 +73,22 @@ export function useUsers(repo: UsersRepo) {
     }
   };
 
+  const userLogout = async () => {
+    try {
+      await dispatch(logoutToken("Sin Token"));
+      await dispatch(loginUser(initialState.userLogged));
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
   return {
     loginToken,
     loginUser,
     loginGallery,
+    logoutToken,
     userLogin,
     userLoginWithToken,
+    userLogout,
   };
 }

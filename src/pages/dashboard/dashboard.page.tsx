@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
 
 export default function DashboardPage() {
@@ -6,6 +7,11 @@ export default function DashboardPage() {
     (state: RootState) =>
       state.productMovementState.analytics.results[0].ActualInventoryCost
   );
+  const userLoggedToken = useSelector(
+    (state: RootState) => state.userState.userLoggedToken
+  );
+  const navigate = useNavigate();
+  // if (userLoggedToken === "Sin Token") navigate("/");
 
   return (
     <>

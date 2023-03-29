@@ -14,25 +14,34 @@ import {
 export function useProducts(repo: ProductsRepo) {
   // const repoProduct = useMemo(() => new ProductsRepo(), []);
   // PENDIENTE DE RESOLVER LA RECUPERACIÓN DEL TOKEN DEL ESTADO EN VEZ DEL LOCALSTORAGE
-  const productState = useSelector((state: RootState) => state.productState);
-  // const userState = useSelector((state: RootState) => state.userState);
+  const productStateData = useSelector(
+    (state: RootState) => state.productState
+  );
+  const userStateData = useSelector((state: RootState) => state.userState);
   const dispatch = useDispatch<AppDispatch>();
 
   const tokenAtLocalStorage = localStorage.tokenERP;
+  const tokenAtUserState = userStateData.userLoggedToken;
 
-  // localStorage.getItem("tokenERP") === undefined || null
-  //   ? "Sin Token"
-  //   : localStorage.getItem("tokenERP");
-
-  //   localStorage.tokenERP
+  const tokenToUse =
+    tokenAtUserState === "Sin Token" ? tokenAtLocalStorage : tokenAtUserState;
 
   const gallery = async () => {
+    console.log(
+      "Token in userState at gallery useProduct hook: ",
+      tokenAtUserState
+    );
+    console.log(
+      "Token in localStorage at gallery useProduct hook: ",
+      tokenAtLocalStorage
+    );
+    console.log("Token used at gallery useProduct hook: ", tokenToUse);
     try {
       const serverGalleryResponse: any = await repo.readGallery(
         // userState.userLoggedToken,
-        tokenAtLocalStorage,
+        tokenToUse,
         "products/gallery",
-        productState.filter
+        productStateData.filter
       );
 
       await dispatch(loadGallery(serverGalleryResponse.results));
@@ -43,10 +52,10 @@ export function useProducts(repo: ProductsRepo) {
     try {
       const serverCountResponse: any = await repo.countProducts(
         // userState.userLoggedToken,
-        tokenAtLocalStorage,
+        tokenToUse,
         "products/count",
-        productState.filter.filterField,
-        productState.filter.filterValue
+        productStateData.filter.filterField,
+        productStateData.filter.filterValue
       );
 
       await dispatch(loadCount(serverCountResponse.results[0]));
@@ -57,7 +66,7 @@ export function useProducts(repo: ProductsRepo) {
     try {
       const serverCountResponse: any = await repo.readGroupsByField(
         // userState.userLoggedToken,
-        tokenAtLocalStorage,
+        tokenToUse,
         "products/group-values-per-field",
         "brand"
       );
@@ -73,10 +82,19 @@ export function useProducts(repo: ProductsRepo) {
   };
 
   const detail = async (id: string) => {
+    console.log(
+      "Token in userState at detail useProduct hook: ",
+      tokenAtUserState
+    );
+    console.log(
+      "Token in localStorage at detail useProduct hook: ",
+      tokenAtLocalStorage
+    );
+    console.log("Token used at detail useProduct hook: ", tokenToUse);
     try {
       const serverDetailResponse: any = await repo.readDetail(
         // userState.userLoggedToken,
-        tokenAtLocalStorage,
+        tokenToUse,
         "products/" + id
       );
 

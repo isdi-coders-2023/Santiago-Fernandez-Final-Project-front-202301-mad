@@ -25,10 +25,14 @@ export default function HomePage() {
   const userLoggedToken = useSelector(
     (state: RootState) => state.userState.userLoggedToken
   );
+
+  const userLoggedEmail = useSelector(
+    (state: RootState) => state.userState.userLogged.email
+  );
+
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (userLoggedObject.firstName === undefined) navigate("/");
-  // }, []);
+
+  // if (userLoggedToken === "Sin Token") navigate("/");
 
   return (
     <>
