@@ -108,7 +108,7 @@ export function Filter() {
       <div className="filter_forms">
         <div>
           <form className="filter__form" onSubmit={handlerFilterSubmit}>
-            <label>Seleccionar marca</label>
+            <label>Seleccionar marca:</label>
             <select
               name="marcas"
               className="filter__selectField"
@@ -120,7 +120,7 @@ export function Filter() {
                 </option>
               ))}
             </select>
-            <label>Ordenar por</label>
+            <label>Ordenar por:</label>
             <select
               className="filter__orderByField"
               defaultValue={orderFieldDefault}
@@ -131,7 +131,7 @@ export function Filter() {
                 </option>
               ))}
             </select>
-            <label>Registros por página</label>
+            <label>Registros por página:</label>
             <select
               className="filter__recordsPerSet"
               defaultValue={filterRecordsPerSetDefault}
