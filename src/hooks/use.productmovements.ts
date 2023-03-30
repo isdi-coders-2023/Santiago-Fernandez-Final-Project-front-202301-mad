@@ -12,8 +12,6 @@ import {
 import { ProductMovementsRepo } from "../services/repositories/productmovement.repo";
 
 export function useProductMovements(repo: ProductMovementsRepo) {
-  // const repoProduct = useMemo(() => new ProductsRepo(), []);
-  // PENDIENTE DE RESOLVER LA RECUPERACIÓN DEL TOKEN DEL ESTADO EN VEZ DEL LOCALSTORAGE
   const productMovementStateData = useSelector(
     (state: RootState) => state.productMovementState
   );
@@ -26,7 +24,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
   const tokenToUse =
     tokenAtUserState === "Sin Token" ? tokenAtLocalStorage : tokenAtUserState;
 
-  const gallery = async () => {
+  const galleryProductMovement = async () => {
     console.log(
       "Token in userState at gallery useProduct hook: ",
       tokenAtUserState
@@ -63,18 +61,18 @@ export function useProductMovements(repo: ProductMovementsRepo) {
       console.error((error as Error).message);
     }
 
-    try {
-      const serverCountResponse: any = await repo.readGroupsByField(
-        // userState.userLoggedToken,
-        tokenToUse,
-        "productmovements/group-values-per-field",
-        "productSku"
-      );
+    // try {
+    //   const serverCountResponse: any = await repo.readGroupsByField(
+    //     // userState.userLoggedToken,
+    //     tokenToUse,
+    //     "productmovements/group-values-per-field",
+    //     "productSku"
+    //   );
 
-      // await dispatch(loadMovementFilterOptions(serverCountResponse.results));
-    } catch (error) {
-      console.error((error as Error).message);
-    }
+    //   // await dispatch(loadMovementFilterOptions(serverCountResponse.results));
+    // } catch (error) {
+    //   console.error((error as Error).message);
+    // }
   };
 
   const detailCredentials = async (credential: string) => {
@@ -146,7 +144,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
     loadGallery,
     loadCount,
     loadPage,
-    gallery,
+    galleryProductMovement,
     detail,
     filter,
     pagination,

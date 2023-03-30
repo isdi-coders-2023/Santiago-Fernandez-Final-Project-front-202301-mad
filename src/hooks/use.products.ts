@@ -12,92 +12,62 @@ import {
 } from "../reducers/product.slice";
 
 export function useProducts(repo: ProductsRepo) {
-  // const repoProduct = useMemo(() => new ProductsRepo(), []);
-  // PENDIENTE DE RESOLVER LA RECUPERACIÓN DEL TOKEN DEL ESTADO EN VEZ DEL LOCALSTORAGE
   const productStateData = useSelector(
     (state: RootState) => state.productState
   );
   const userStateData = useSelector((state: RootState) => state.userState);
   const dispatch = useDispatch<AppDispatch>();
-
-  const tokenAtLocalStorage = localStorage.tokenERP;
   const tokenAtUserState = userStateData.userLoggedToken;
 
-  const tokenToUse =
-    tokenAtUserState === "Sin Token" ? tokenAtLocalStorage : tokenAtUserState;
+  const tokenToUse = tokenAtUserState;
 
-  const gallery = async () => {
-    console.log(
-      "Token in userState at gallery useProduct hook: ",
-      tokenAtUserState
+  const galleryProduct = async () => {
+    const serverGalleryResponse: any = await repo.readGallery(
+      tokenToUse,
+      "products/gallery",
+      productStateData.filter
     );
-    console.log(
-      "Token in localStorage at gallery useProduct hook: ",
-      tokenAtLocalStorage
-    );
-    console.log("Token used at gallery useProduct hook: ", tokenToUse);
     try {
-      const serverGalleryResponse: any = await repo.readGallery(
-        // userState.userLoggedToken,
-        tokenToUse,
-        "products/gallery",
-        productStateData.filter
-      );
-
-      await dispatch(loadGallery(serverGalleryResponse.results));
+      dispatch(loadGallery(serverGalleryResponse.results));
     } catch (error) {
       console.error((error as Error).message);
     }
 
+    const serverCountResponse: any = await repo.countProducts(
+      tokenToUse,
+      "products/count",
+      productStateData.filter.filterField,
+      productStateData.filter.filterValue
+    );
     try {
-      const serverCountResponse: any = await repo.countProducts(
-        // userState.userLoggedToken,
-        tokenToUse,
-        "products/count",
-        productStateData.filter.filterField,
-        productStateData.filter.filterValue
-      );
-
-      await dispatch(loadCount(serverCountResponse.results[0]));
+      dispatch(loadCount(serverCountResponse.results[0]));
     } catch (error) {
       console.error((error as Error).message);
     }
 
+    const serverGroupByFieldResponse: any = await repo.readGroupsByField(
+      // userState.userLoggedToken,
+      tokenToUse,
+      "products/group-values-per-field",
+      "brand"
+    );
     try {
-      const serverCountResponse: any = await repo.readGroupsByField(
-        // userState.userLoggedToken,
-        tokenToUse,
-        "products/group-values-per-field",
-        "brand"
-      );
-
-      await dispatch(loadFilterOptions(serverCountResponse.results));
+      dispatch(loadFilterOptions(serverGroupByFieldResponse.results));
     } catch (error) {
       console.error((error as Error).message);
     }
   };
 
-  const detailCredentials = async (credential: string) => {
+  const detailCredentials = (credential: string) => {
     dispatch(loadDetailCredentials(credential));
   };
 
   const detail = async (id: string) => {
-    console.log(
-      "Token in userState at detail useProduct hook: ",
-      tokenAtUserState
+    const serverDetailResponse: any = await repo.readDetail(
+      tokenToUse,
+      "products/" + id
     );
-    console.log(
-      "Token in localStorage at detail useProduct hook: ",
-      tokenAtLocalStorage
-    );
-    console.log("Token used at detail useProduct hook: ", tokenToUse);
     try {
-      const serverDetailResponse: any = await repo.readDetail(
-        // userState.userLoggedToken,
-        tokenToUse,
-        "products/" + id
-      );
-
       await dispatch(loadDetail(serverDetailResponse.results));
     } catch (error) {
       console.error((error as Error).message);
@@ -126,7 +96,7 @@ export function useProducts(repo: ProductsRepo) {
     loadDetail,
     loadFilterOptions,
     loadPage,
-    gallery,
+    galleryProduct,
     detailCredentials,
     detail,
     filter,

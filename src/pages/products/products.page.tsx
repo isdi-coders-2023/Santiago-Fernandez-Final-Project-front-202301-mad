@@ -26,7 +26,7 @@ export default function ProductsPage() {
 
   useEffect(() => {
     galleryProduct();
-  }, []);
+  }, [filterObject]);
 
   const { detailCredentials } = useProducts(repoProduct);
   const navigate = useNavigate();
@@ -45,13 +45,10 @@ export default function ProductsPage() {
 
   return (
     <>
-      {/* <header className="productsPage__header">Galería de Productos</header> */}
       <Filter></Filter>
       <div className="productsPage__container">
         <ul className="productsPage__list">
           {galleryArray.map((item: Partial<ProductStructure>) => (
-            // <Card key={item.id} product={item}></Card>
-
             <li className="productsPageCard" key={"li" + item.id}>
               <div className="productsPageCard__imageContainer">
                 <img

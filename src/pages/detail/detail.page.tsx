@@ -1,17 +1,14 @@
 import "./detail.page.css";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useProducts } from "../../hooks/use.products";
 import { ProductsRepo } from "../../services/repositories/product.repo";
 import { RootState } from "../../store/store";
 
 export default function DetailPage() {
-  // const repoProduct = useMemo(() => new ProductsRepo(), []);
-  // const { detail } = useProducts(repoProduct);
-  console.log("hola en DetailPage");
-  // const userCreatorFullNames = useSelector(
-  //   (state: RootState) => state.userState.usersGallery
-  // );
+  const userCreatorFullNames = useSelector(
+    (state: RootState) => state.userState.usersGallery
+  );
 
   const detailProductData = useSelector(
     (state: RootState) => state.productState.detail
@@ -22,10 +19,9 @@ export default function DetailPage() {
   );
   const repoProduct = new ProductsRepo();
   const { detail } = useProducts(repoProduct);
-  // detail(detailCredentialsData);
+
   useEffect(() => {
     detail(detailCredentialsData);
-    // console.log("hola en UseEffect");
   }, []);
 
   return (
@@ -42,23 +38,34 @@ export default function DetailPage() {
                 alt={`${item.shortDescription} card`}
               ></img>
             </div>
-            {/* ______ */}
+
             <div className="detail__dataContainer">
               <div>Marca: {item.brand}</div>
               <div>SKU: {item.sku}</div>
               <div>EAN: {item.ean}</div>
               <div>Coste (€): {item.costPerUnit}</div>
               <div>Precio (€): {item.pricePerUnit}</div>
+              <div>
+                Creado por:
+                {
+                  userCreatorFullNames.filter(
+                    (item) =>
+                      item.email === detailProductData[0].userCreatorEmail
+                  )[0].firstName
+                }
+              </div>
+
               {/* <div>
-            Creado por:
-            {" " + userCreatorFullNames === undefined
-              ? userCreatorFullNames.filter(
-                  (item) => item.email === detailProductData[0].userCreatorEmail
-                )[0].firstName
-              : " " + detailProductData[0].userCreatorEmail}
-          </div> */}
+                Creado por:
+                {" " + userCreatorFullNames === undefined
+                  ? userCreatorFullNames.filter(
+                      (item) =>
+                        item.email === detailProductData[0].userCreatorEmail
+                    )[0].firstName
+                  : " " + detailProductData[0].userCreatorEmail}
+              </div> */}
             </div>
-            {/* ______ */}
+
             <div className="detail__descriptionContainer">
               <div className="detail__shortDescription">
                 Descripción en tarifa:

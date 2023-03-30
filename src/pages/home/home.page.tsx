@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../../store/store";
@@ -10,6 +11,10 @@ export default function HomePage() {
   const userLoggedToken = useSelector(
     (state: RootState) => state.userState.userLoggedToken
   );
+  localStorage.setItem("tokenERP", userLoggedToken);
+  useEffect(() => {
+    localStorage.setItem("tokenERP", userLoggedToken);
+  }, []);
 
   return (
     <>

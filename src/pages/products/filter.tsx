@@ -10,7 +10,7 @@ import "./filter.css";
 export function Filter() {
   const navigate = useNavigate();
   const repoProduct = useMemo(() => new ProductsRepo(), []);
-  const { filter, pagination } = useProducts(repoProduct);
+  const { filter, pagination, galleryProduct } = useProducts(repoProduct);
   const filterOptionsArray = useSelector(
     (state: RootState) => state.productState.filterOptions
   );
@@ -32,7 +32,7 @@ export function Filter() {
   );
 
   const orderByFields = ["brand", "ean", "id", "shortDescription", "sku"];
-  const recordsPerSetArray = [8, 16, 32, 64, 128];
+  const recordsPerSetArray = [4, 8, 16, 32, 64, 128];
 
   const handlerFilterSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,6 +48,7 @@ export function Filter() {
 
     filter(filterData);
     pagination(1);
+
     navigate("/products");
   };
 
