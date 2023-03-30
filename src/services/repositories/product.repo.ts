@@ -39,10 +39,6 @@ export class ProductsRepo {
         "Content-type": "application/json",
       },
     });
-    console.log("Token at Product Repo when readGallery method is instanced: ");
-    console.log(token);
-    console.log("Filter at Product Repo when readGallery method is instanced:");
-    console.log(filter);
 
     if (!resp.ok)
       throw new Error(

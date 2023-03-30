@@ -57,8 +57,6 @@ export function useUsers(repo: UsersRepo) {
       if (userLoggedToken !== initialStateToken) {
         await localStorage.setItem("tokenERP", userLoggedToken);
       }
-      console.log("Token in userState: ", userLoggedToken);
-      console.log("Token in localStorage: ", localStorage.tokenERP);
       const serverGalleryResponse: any = await repo.readGallery(
         localStorage.token,
         "users"

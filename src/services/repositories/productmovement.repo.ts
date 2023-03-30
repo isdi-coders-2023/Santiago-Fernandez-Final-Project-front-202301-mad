@@ -38,14 +38,6 @@ export class ProductMovementsRepo {
         "Content-type": "application/json",
       },
     });
-    console.log(
-      "Token at ProductMovements Repo when readGallery method is instanced: "
-    );
-    console.log(token);
-    console.log(
-      "Filter at ProductMovements Repo when readGallery method is instanced:"
-    );
-    console.log(filter);
 
     if (!resp.ok)
       throw new Error(
@@ -74,6 +66,27 @@ export class ProductMovementsRepo {
       headers: {
         Authorization: "Bearer " + token,
         "Content-type": "application/json",
+      },
+    });
+
+    if (!resp.ok)
+      throw new Error(
+        `Error http reading the count of product movements: ${resp.status} ${resp.statusText}`
+      );
+
+    const data = await resp.json();
+
+    return data;
+  }
+
+  async countAll(token: string, urlExtraPath: string): Promise<number> {
+    const url = this.url + "/" + urlExtraPath;
+
+    const resp = await fetch(url, {
+      method: "GET",
+
+      headers: {
+        Authorization: "Bearer " + token,
       },
     });
 
@@ -141,6 +154,27 @@ export class ProductMovementsRepo {
 
     const resp = await fetch(url, {
       method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    if (!resp.ok)
+      throw new Error(
+        `Error http reading product detail: ${resp.status} ${resp.statusText}`
+      );
+
+    const data = await resp.json();
+    console.log(data);
+    return data;
+  }
+
+  async readAnalytics(token: string): Promise<ProductServerResponseType> {
+    const url = this.url + "/productmovements/analytics";
+    console.log(url);
+
+    const resp = await fetch(url, {
+      method: "GET",
       headers: {
         Authorization: "Bearer " + token,
       },

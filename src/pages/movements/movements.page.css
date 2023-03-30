@@ -29,3 +29,7 @@
 .productMovementsPage__tableTd {
   text-align: left;
 }
+
+.productMovementsPage__tableTd {
+  background-color: blue;
+}

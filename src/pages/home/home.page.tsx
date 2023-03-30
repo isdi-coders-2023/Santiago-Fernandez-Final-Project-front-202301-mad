@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-
 import { RootState } from "../../store/store";
+import "./home.page.css";
 
 export default function HomePage() {
   const userLoggedObject = useSelector(
@@ -18,16 +18,15 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="homePage_container">
-        <header>Bienvenido a ERP</header>
+      <div className="homePage__container">
+        <h2>Bienvenido a ERP</h2>
         <section className="userLogged_profile">
-          <h2>
+          <h3>
             Nombre:{" "}
             {userLoggedObject.firstName + " " + userLoggedObject.lastName}
-          </h2>
+          </h3>
           <p>Email: {userLoggedObject.email}</p>
           <p>Rol: {userLoggedObject.role}</p>
-          <p>Última Conexión: {userLoggedObject.lastLogging}</p>
           <p>Token en estado del usuario: {userLoggedToken}</p>
           <p>Token en localStorage: {localStorage.getItem("tokenERP")}</p>
 

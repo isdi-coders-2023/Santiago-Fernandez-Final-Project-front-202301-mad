@@ -10,7 +10,7 @@ export const menuOptions: MenuOption[] = [
   { label: "Dashboard", path: "/dashboard" },
   { label: "Productos", path: "/products" },
   { label: "Movimientos", path: "/movements" },
-  { label: "Filtro", path: "/products/filter" },
+  // { label: "Filtro", path: "/products/filter" },
 ];
 
 export type MenuProps = {

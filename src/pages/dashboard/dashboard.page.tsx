@@ -1,37 +1,64 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useProductMovements } from "../../hooks/use.productmovements";
+import { ProductMovementsRepo } from "../../services/repositories/productmovement.repo";
 import { RootState } from "../../store/store";
+import "./dashboard.page.css";
 
 export default function DashboardPage() {
-  const ActualInventoryCostData = useSelector(
-    (state: RootState) =>
-      state.productMovementState.analytics.results[0].ActualInventoryCost
+  const analyticsArray = useSelector(
+    (state: RootState) => state.productMovementState.analytics
   );
-  const userLoggedToken = useSelector(
-    (state: RootState) => state.userState.userLoggedToken
+
+  const analyticsProductsCount = useSelector(
+    (state: RootState) => state.productState.count
   );
-  const navigate = useNavigate();
-  // if (userLoggedToken === "Sin Token") navigate("/");
+
+  const analyticsProductMovementsCount = useSelector(
+    (state: RootState) => state.productMovementState.unfilteredCount
+  );
+
+  const repoProductMovement = new ProductMovementsRepo();
+  const { analytics } = useProductMovements(repoProductMovement);
+
+  useEffect(() => {
+    analytics();
+  }, []);
 
   return (
     <>
-      <header>Dashboard Page</header>
-      <div>
-        <p>Inventory Monthly Evolution</p>
-        <p>{ActualInventoryCostData}</p>
-      </div>
-      <div>
-        <p>Products</p>
-        <p></p>
-      </div>
-      <div>
-        <p>Units</p>
-        <p></p>
-      </div>
-      <div>
-        <p>Value</p>
-        <p></p>
-      </div>
+      {analyticsArray.map((item) => (
+        <div
+          className="dashboard__container"
+          key={analyticsArray.indexOf(item)}
+        >
+          <div className="dashboard__graph">
+            <p className="dashboard__actualInventoryCostLabel">
+              Actual Inventory Value{" "}
+            </p>
+            <p className="dashboard__actualInventoryCost">
+              {item.ActualInventoryCost[0].totalValue}
+            </p>
+          </div>
+          <div className="dashboard__metrics">
+            <div className="dashboard__metricProduct">
+              <p>Productos</p>
+              <p>{analyticsProductsCount}</p>
+            </div>
+            <div className="dashboard__metricUnits">
+              <p>Unidades en Stock</p>
+              <p>{}</p>
+            </div>
+            <div className="dashboard__metricValue">
+              <p>Movimientos de Productos</p>
+              <p className="dashboard__actualMovementsCount">
+                {analyticsProductMovementsCount}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
     </>
   );
 }
