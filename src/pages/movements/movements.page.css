@@ -24,3 +24,8 @@
 .productMovementsPage_fieldsRow div {
   border-color: #4472c4;
 }
+
+.productMovementsPage__data,
+.productMovementsPage__tableTd {
+  text-align: left;
+}

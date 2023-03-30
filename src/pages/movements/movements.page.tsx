@@ -19,10 +19,10 @@ export default function MovementsPage() {
   );
 
   const repoProductMovement = new ProductMovementsRepo();
-  const { gallery } = useProductMovements(repoProductMovement);
+  const { galleryProductMovement } = useProductMovements(repoProductMovement);
 
   useEffect(() => {
-    gallery();
+    galleryProductMovement();
   }, [filterObject, pageNumber]);
 
   const mock1 = [
@@ -50,20 +50,20 @@ export default function MovementsPage() {
           <div className="productMovementsPage__tableTd">Tipo</div>
           <div className="productMovementsPage__tableTd">ID</div>
           <div className="productMovementsPage__tableTd">SKU</div>
-          <div className="productMovementsPage__tableTd">Descripción</div>
           <div className="productMovementsPage__tableTd">Coste</div>
           <div className="productMovementsPage__tableTd">Uds</div>
         </div>
         {filteredGalleryData.map((item) => (
-          <div className="productMovementsPage_fieldsRow" key={"li" + item.id}>
-            <div>{item.date}</div>
-            <div>{item.type}</div>
-            <div>{item.id}</div>
-            <div>{item.productSku}</div>
-            <div>{item.productSku}</div>
-            <div>{item.costPerUnit}</div>
-            <div>{item.pricePerUnit}</div>
-          </div>
+          <li className="productMovementsPage_fieldsRow" key={item.id}>
+            <div className="productMovementsPage__data">{item.date}</div>
+            <div className="productMovementsPage__data">{item.type}</div>
+            <div className="productMovementsPage__data">{item.typeId}</div>
+            <div className="productMovementsPage__data">{item.productSku}</div>
+            <div className="productMovementsPage__data">{item.costPerUnit}</div>
+            <div className="productMovementsPage__data">
+              {item.pricePerUnit}
+            </div>
+          </li>
         ))}
       </div>
     </>

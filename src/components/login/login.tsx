@@ -11,12 +11,11 @@ import "./login.css";
 export function Login() {
   const repoUser = useMemo(() => new UsersRepo(), []);
   const repoProduct = useMemo(() => new ProductsRepo(), []);
-  // Without memonization: const repo = new UsersRepo();
 
   const navigate = useNavigate();
 
   const { userLogin, userLoginWithToken } = useUsers(repoUser);
-  const { gallery } = useProducts(repoProduct);
+  const { galleryProduct } = useProducts(repoProduct);
 
   useEffect(() => {
     if (
@@ -42,7 +41,6 @@ export function Login() {
     };
 
     userLogin(loginForm);
-    // gallery();
 
     navigate("/home");
   };
@@ -82,11 +80,11 @@ export function Login() {
         <button type="submit" className="login__button">
           Log In
         </button>
-        <div>
+        {/* <div>
           <Link to="/register" className="login__register">
             Forgot your password?
           </Link>
-        </div>
+        </div> */}
       </form>
     </div>
   );

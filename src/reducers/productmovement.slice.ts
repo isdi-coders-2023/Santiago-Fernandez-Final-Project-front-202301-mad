@@ -25,11 +25,11 @@ export type ProductMovementStateStructure = {
 const initialState: ProductMovementStateStructure = {
   filteredGallery: [],
   filter: {
-    filterField: "productSku",
-    filterValue: "156449",
+    filterField: "store",
+    filterValue: "AL01",
     filterSet: 1,
     filterRecordsPerSet: 100,
-    orderField: "productSku",
+    orderField: "date",
   },
   page: 1,
   count: 100,

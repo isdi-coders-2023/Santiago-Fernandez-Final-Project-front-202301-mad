@@ -4,7 +4,7 @@ export type ProductMovementStructure = {
   batch: string;
   date: string;
   type: string;
-  typeId: number;
+  typeId: string;
   store: string;
   units: number;
   costPerUnit: number;

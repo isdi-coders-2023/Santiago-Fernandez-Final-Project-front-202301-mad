@@ -31,14 +31,8 @@ export function Filter() {
     (state: RootState) => state.productState.page
   );
 
-  // const filterOptionsArrayOrdered = filterOptionsArray.sort();
   const orderByFields = ["brand", "ean", "id", "shortDescription", "sku"];
   const recordsPerSetArray = [8, 16, 32, 64, 128];
-  // const labelArray = ["Seleccione"];
-  // const filterOptionsArrayWithLabel = filterOptionsArray.push(labelArray[0]);
-
-  // const selectToReset = useRef("id__pagination__pages");
-  // console.log(selectToReset);
 
   const handlerFilterSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,11 +48,6 @@ export function Filter() {
 
     filter(filterData);
     pagination(1);
-    // const selectToReset = document.getElementById(
-    //   "id__pagination__pages"
-    // ) as HTMLSelectElement;
-    // selectToReset.defaultValue = "1";
-
     navigate("/products");
   };
 
@@ -81,10 +70,9 @@ export function Filter() {
   const handlerPaginationSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formPagination = event.currentTarget;
-    console.log(formPagination);
+
     const paginationData = (formPagination.elements[0] as HTMLFormElement)
       .value;
-    console.log(paginationData);
 
     const formFilter = document.forms[0];
     console.log(formFilter);

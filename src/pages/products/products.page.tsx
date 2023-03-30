@@ -2,14 +2,12 @@ import "./products.page.css";
 
 import { SyntheticEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Card } from "../../components/card/card";
+
 import { useProducts } from "../../hooks/use.products";
 import { ProductStructure } from "../../models/product.model";
 import { ProductsRepo } from "../../services/repositories/product.repo";
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import { render } from "react-dom";
-import { createRoot } from "react-dom/client";
 import { Filter } from "./filter";
 
 export default function ProductsPage() {
@@ -24,13 +22,12 @@ export default function ProductsPage() {
   const pageNumber = useSelector((state: RootState) => state.productState.page);
 
   const repoProduct = new ProductsRepo();
-  const { gallery } = useProducts(repoProduct);
+  const { galleryProduct } = useProducts(repoProduct);
 
   useEffect(() => {
-    gallery();
-  }, [filterObject, pageNumber]);
+    galleryProduct();
+  }, []);
 
-  const { detail } = useProducts(repoProduct);
   const { detailCredentials } = useProducts(repoProduct);
   const navigate = useNavigate();
 
@@ -40,9 +37,7 @@ export default function ProductsPage() {
         ? "156450"
         : event.currentTarget.innerHTML;
     const keyToDetail = "sku";
-    console.log(keyToDetail + "/" + valueToDetail);
 
-    // detail(keyToDetail + "/" + valueToDetail);
     detailCredentials(keyToDetail + "/" + valueToDetail);
 
     navigate("/products/detail");
