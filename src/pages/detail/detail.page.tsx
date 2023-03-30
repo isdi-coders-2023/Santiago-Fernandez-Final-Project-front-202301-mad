@@ -1,9 +1,10 @@
 import "./detail.page.css";
-import { useEffect } from "react";
+import { SyntheticEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useProducts } from "../../hooks/use.products";
 import { ProductsRepo } from "../../services/repositories/product.repo";
 import { RootState } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 
 export default function DetailPage() {
   const userCreatorFullNames = useSelector(
@@ -18,18 +19,49 @@ export default function DetailPage() {
     (state: RootState) => state.productState.detailCredentials
   );
   const repoProduct = new ProductsRepo();
-  const { detail } = useProducts(repoProduct);
+  const { detail, addSample, deleteById } = useProducts(repoProduct);
 
   useEffect(() => {
     detail(detailCredentialsData);
   }, []);
 
+  const navigate = useNavigate();
+
+  const handlerAdd = (event: SyntheticEvent) => {
+    const sampleToAdd = {
+      sku: "156449_Fake_Fake_Fake",
+      shortDescription: "Chicles Ansiedad Sabor Ciruela 60 g",
+      longDescription:
+        "Chicles de Flores de Bach S.O.S Ansiedad (Tranquilidad y Calma) Sabor Ciruela 60 g 40 unidades apróx.",
+      ean: "4250424101388",
+      brand: "Fake",
+      image:
+        "https://www.mcph.es/code/erp/products/flores-de-bach/4250424101388-001.jpg",
+      userCreatorEmail: "sfdezlop@gmail.com",
+      costPerUnit: 2.6308,
+      pricePerUnit: 4.37,
+    };
+    addSample(sampleToAdd);
+    navigate("/products");
+  };
+
+  const handlerDelete = (event: SyntheticEvent) => {
+    const idToDelete =
+      event.currentTarget.ariaLabel === null
+        ? "156450"
+        : event.currentTarget.ariaLabel;
+
+    deleteById(idToDelete);
+    navigate("/products");
+  };
+  const handlerUpdate = (event: SyntheticEvent) => {
+    navigate("/products");
+  };
   return (
     <>
-      <header className="detail__header">Detalle del Producto</header>
-
-      <article>
-        {detailProductData.map((item) => (
+      <h2 className="detail__header">Detalle del Producto</h2>
+      {detailProductData.map((item) => (
+        <article key={item.id}>
           <div className="detail__container">
             <div className="detail__imageContainer">
               <img
@@ -38,64 +70,54 @@ export default function DetailPage() {
                 alt={`${item.shortDescription} card`}
               ></img>
             </div>
-
             <div className="detail__dataContainer">
               <div>Marca: {item.brand}</div>
+              <div>ID: {item.id}</div>
               <div>SKU: {item.sku}</div>
               <div>EAN: {item.ean}</div>
               <div>Coste (€): {item.costPerUnit}</div>
               <div>Precio (€): {item.pricePerUnit}</div>
               <div>
                 Creado por:
-                {
+                {userCreatorFullNames.filter(
+                  (item) => item.email === detailProductData[0].userCreatorEmail
+                )[0].firstName +
+                  " " +
                   userCreatorFullNames.filter(
                     (item) =>
                       item.email === detailProductData[0].userCreatorEmail
-                  )[0].firstName
-                }
+                  )[0].lastName}
               </div>
-
-              {/* <div>
-                Creado por:
-                {" " + userCreatorFullNames === undefined
-                  ? userCreatorFullNames.filter(
-                      (item) =>
-                        item.email === detailProductData[0].userCreatorEmail
-                    )[0].firstName
-                  : " " + detailProductData[0].userCreatorEmail}
-              </div> */}
             </div>
-
             <div className="detail__descriptionContainer">
               <div className="detail__shortDescription">
-                Descripción en tarifa:
+                Descripción en tarifa: {item.shortDescription}
               </div>
-              <input
-                type="text"
-                className="detail__shortDescriptionInput"
-                placeholder={item.shortDescription}
-              ></input>
+              <div className="detail__shortDescriptionInput"></div>
               <div className="detail__longDescription">
-                Descripción en catálogo:
+                Descripción en catálogo: {item.longDescription}
               </div>
 
               <div>
-                <input
-                  type="text"
-                  className="detail__longDescriptionInput"
-                  placeholder={item.longDescription}
-                ></input>{" "}
+                <div className="detail__longDescriptionInput"></div>
               </div>
-            </div>
+            </div>{" "}
+            {/* <button
+              className="detail__deleteButton"
+              arial-label={item.id}
+              onClick={handlerDelete}
+            >
+              Borrar{item.id}
+            </button> */}
+            {/* <button className="detail__updateButton" onClick={handlerUpdate}>
+              Editar
+            </button> */}
           </div>
-        ))}
-      </article>
-
-      <div className="detail__buttons">
-        <button className="detail__addButton">Añadir</button>
-        <button className="detail__updateButton">Editar</button>
-        <button className="detail__deleteButton">Borrar</button>
-      </div>
+        </article>
+      ))}{" "}
+      <button className="detail__addButton" onClick={handlerAdd}>
+        Añadir Producto Fake
+      </button>
     </>
   );
 }

@@ -1,4 +1,7 @@
-import { ProductServerResponseType } from "../../models/product.model";
+import {
+  ProductServerResponseType,
+  ProductStructure,
+} from "../../models/product.model";
 import { url_def } from "../../config";
 
 type Filter = {
@@ -125,6 +128,72 @@ export class ProductsRepo {
 
     const data = await resp.json();
     console.log(data);
+    return data;
+  }
+
+  async create(
+    token: string,
+    newProduct: Partial<ProductStructure>
+  ): Promise<ProductServerResponseType> {
+    const url = this.url + "/products";
+
+    const resp = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(newProduct),
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (!resp.ok)
+      throw new Error(
+        `Error http adding a product: ${resp.status} ${resp.statusText}`
+      );
+
+    const data = await resp.json();
+
+    return data;
+  }
+
+  async deleteByKey(
+    tokenToUse: string,
+    key: string,
+    value: string
+  ): Promise<void> {
+    const url = this.url + "/products/" + key + "/" + value;
+
+    const resp = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + tokenToUse,
+      },
+    });
+    if (!resp.ok)
+      throw new Error(
+        `Error http deleting a product: ${resp.status} ${resp.statusText}`
+      );
+
+    const data = await resp.json();
+
+    return data;
+  }
+
+  async deleteById(tokenToUse: string, id: string): Promise<void> {
+    const url = this.url + "/products/" + id;
+
+    const resp = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + tokenToUse,
+      },
+    });
+    if (!resp.ok)
+      throw new Error(
+        `Error http deleting a product: ${resp.status} ${resp.statusText}`
+      );
+
+    const data = await resp.json();
+
     return data;
   }
 }

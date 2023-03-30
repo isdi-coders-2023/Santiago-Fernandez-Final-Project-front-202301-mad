@@ -10,6 +10,7 @@ import {
   loadFilter,
   loadPage,
 } from "../reducers/product.slice";
+import { ProductStructure } from "../models/product.model";
 
 export function useProducts(repo: ProductsRepo) {
   const productStateData = useSelector(
@@ -90,6 +91,30 @@ export function useProducts(repo: ProductsRepo) {
     }
   };
 
+  const addSample = async (newProduct: Partial<ProductStructure>) => {
+    const serverDetailResponse: any = await repo.create(tokenToUse, newProduct);
+    try {
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
+  const deleteByKey = async (query: { key: string; value: string }) => {
+    await repo.deleteByKey(tokenToUse, query.key, query.value);
+    try {
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
+  const deleteById = async (id: string) => {
+    await repo.deleteById(tokenToUse, id);
+    try {
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
   return {
     loadGallery,
     loadCount,
@@ -101,5 +126,8 @@ export function useProducts(repo: ProductsRepo) {
     detail,
     filter,
     pagination,
+    addSample,
+    deleteByKey,
+    deleteById,
   };
 }

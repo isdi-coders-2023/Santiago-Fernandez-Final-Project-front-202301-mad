@@ -46,10 +46,10 @@
   flex-direction: row;
 }
 
-.detail__shortDescriptionInput,
-.detail__longDescriptionInput {
-  border: 0;
-  width: calc(100% - 1rem);
-  background-color: white;
-  font-size: 1rem;
+.detail__addButton,
+.detail__updateButton,
+.detail__deleteButton {
+  margin: 50px;
+  padding: 0.5rem;
+  transform: 98%;
 }
