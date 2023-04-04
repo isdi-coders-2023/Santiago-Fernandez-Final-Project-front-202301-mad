@@ -45,7 +45,7 @@ export class UsersRepo {
         Authorization: "Bearer " + token,
       },
     });
-    console.log(token);
+
     if (!resp.ok)
       throw new Error(
         `Error http reading user gallery: ${resp.status} ${resp.statusText}`

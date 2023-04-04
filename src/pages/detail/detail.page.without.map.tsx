@@ -6,7 +6,7 @@ import { ProductsRepo } from "../../services/repositories/product.repo";
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 
-export default function DetailPage() {
+export default function DetailPageWithoutMap() {
   const userCreatorFullNames = useSelector(
     (state: RootState) => state.userState.usersGallery
   );
@@ -27,7 +27,7 @@ export default function DetailPage() {
   );
 
   const repoProduct = new ProductsRepo();
-  const { detail, addSampleProducts, deleteByIdProducts, galleryProduct } =
+  const { detail, addSampleProducts, deleteByIdProducts } =
     useProducts(repoProduct);
 
   useEffect(() => {
@@ -54,22 +54,13 @@ export default function DetailPage() {
     };
 
     addSampleProducts(dynamicSampleToAdd);
-    galleryProduct();
     navigate("/products");
   };
 
   const handlerDelete = (event: SyntheticEvent) => {
-    if (detailProductData[0] === undefined) {
-      // galleryProduct();
-      navigate("/products");
-    }
-
-    if (detailProductData[0].brand === "Fake") {
-      deleteByIdProducts(detailProductData[0].id);
-      // galleryProduct();
-      navigate("/products");
-    }
-    // galleryProduct();
+    detailProductData[0].brand === "Fake"
+      ? deleteByIdProducts(detailProductData[0].id)
+      : navigate("/products");
     navigate("/products");
   };
   const handlerUpdate = (event: SyntheticEvent) => {
@@ -77,57 +68,53 @@ export default function DetailPage() {
   };
   return (
     <>
-      <h2 className="detail__header">Product Details</h2>
-      {detailProductData.map((item) => (
-        <article key={item.id}>
-          <div className="detail__container">
-            <div className="detail__imageContainer">
-              <img
-                className="detail__image"
-                src={item.image}
-                alt={`${item.shortDescription} card`}
-              ></img>
+      <h2 className="detail__header">Detalle del Producto sin Mapping</h2>
+      <article key={detailProductData[0].id}>
+        <div className="detail__container">
+          <div className="detail__imageContainer">
+            <img
+              className="detail__image"
+              src={detailProductData[0].image}
+              alt={`${detailProductData[0].shortDescription} card`}
+            ></img>
+          </div>
+          <div className="detail__dataContainer">
+            <div>Marca: {detailProductData[0].brand}</div>
+            <div>ID: {detailProductData[0].id}</div>
+            <div>SKU: {detailProductData[0].sku}</div>
+            <div>EAN: {detailProductData[0].ean}</div>
+            <div>Coste (€): {detailProductData[0].costPerUnit}</div>
+            <div>Precio (€): {detailProductData[0].pricePerUnit}</div>
+            <div>
+              Creado por:
+              {userCreatorFullNames.filter(
+                (item) => item.email === detailProductData[0].userCreatorEmail
+              )[0].firstName +
+                " " +
+                userCreatorFullNames.filter(
+                  (item) => item.email === detailProductData[0].userCreatorEmail
+                )[0].lastName}
             </div>
-            <div className="detail__dataContainer">
-              <div>Brand: {item.brand}</div>
-              <div>ID: {item.id}</div>
-              <div>SKU: {item.sku}</div>
-              <div>EAN: {item.ean}</div>
-              <div>Cost (€): {item.costPerUnit}</div>
-              <div>Price (€): {item.pricePerUnit}</div>
-              <div>
-                Created by:
-                {" " +
-                  userCreatorFullNames.filter(
-                    (item) =>
-                      item.email === detailProductData[0].userCreatorEmail
-                  )[0].firstName +
-                  " " +
-                  userCreatorFullNames.filter(
-                    (item) =>
-                      item.email === detailProductData[0].userCreatorEmail
-                  )[0].lastName}
-              </div>
+          </div>
+          <div className="detail__descriptionContainer">
+            <div className="detail__shortDescription">
+              Descripción en tarifa: {detailProductData[0].shortDescription}
             </div>
-            <div className="detail__descriptionContainer">
-              <div className="detail__shortDescription">
-                Short Description: {item.shortDescription}
-              </div>
-              <div className="detail__shortDescriptionInput"></div>
-              <div className="detail__longDescription">
-                Long Description: {item.longDescription}
-              </div>
+            <div className="detail__shortDescriptionInput"></div>
+            <div className="detail__longDescription">
+              Descripción en catálogo: {detailProductData[0].longDescription}
+            </div>
 
-              <div>
-                <div className="detail__longDescriptionInput"></div>
-              </div>
-            </div>{" "}
-            {/* <button className="detail__updateButton" onClick={handlerUpdate}>
+            <div>
+              <div className="detail__longDescriptionInput"></div>
+            </div>
+          </div>{" "}
+          {/* <button className="detail__updateButton" onClick={handlerUpdate}>
               Editar
             </button> */}
-          </div>
-        </article>
-      ))}{" "}
+        </div>
+      </article>
+
       <button className="detail__addButton" onClick={handlerAdd}>
         Add a Fake Product
       </button>

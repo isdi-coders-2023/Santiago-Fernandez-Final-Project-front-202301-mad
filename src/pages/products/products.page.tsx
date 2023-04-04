@@ -8,25 +8,36 @@ import { ProductStructure } from "../../models/product.model";
 import { ProductsRepo } from "../../services/repositories/product.repo";
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import { Filter } from "./filter";
+import { Filter } from "../../components/filter/filter";
+// import { Filter } from "./filter";
 
 export default function ProductsPage() {
   const galleryArray = useSelector(
     (state: RootState) => state.productState.filteredGallery
   );
 
+  const detailArray = useSelector(
+    (state: RootState) => state.productState.detail
+  );
+
   const filterObject = useSelector(
     (state: RootState) => state.productState.filter
   );
 
-  const pageNumber = useSelector((state: RootState) => state.productState.page);
+  const pageNumber = useSelector(
+    (state: RootState) => state.productState.filteredPage
+  );
+
+  const detailProductData = useSelector(
+    (state: RootState) => state.productState.detail
+  );
 
   const repoProduct = new ProductsRepo();
   const { galleryProduct } = useProducts(repoProduct);
 
   useEffect(() => {
     galleryProduct();
-  }, [filterObject]);
+  }, [filterObject, pageNumber]);
 
   const { detailCredentials } = useProducts(repoProduct);
   const navigate = useNavigate();

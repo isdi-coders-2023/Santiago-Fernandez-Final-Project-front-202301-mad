@@ -3,8 +3,8 @@ import { AppDispatch, RootState } from "../store/store";
 import {
   loadGallery,
   loadFilter,
-  loadPage,
-  loadCount,
+  loadFilteredPage,
+  loadFilteredCount,
   loadAnalytics,
   loadUnfilteredCount,
 } from "../reducers/productmovement.slice";
@@ -26,7 +26,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
 
   const galleryProductMovement = async () => {
     try {
-      const serverGalleryResponse: any = await repo.readGallery(
+      const serverGalleryResponse: any = await repo.readFilteredGallery(
         tokenToUse,
         "productmovements/gallery",
         productMovementStateData.filter
@@ -38,22 +38,49 @@ export function useProductMovements(repo: ProductMovementsRepo) {
     }
 
     try {
-      const serverCountResponse: any = await repo.countProducts(
+      const serverCountResponse: any = await repo.readFilteredCount(
         tokenToUse,
         "productmovements/count",
         productMovementStateData.filter.filterField,
         productMovementStateData.filter.filterValue
       );
 
-      await dispatch(loadCount(serverCountResponse.results[0]));
+      await dispatch(loadFilteredCount(serverCountResponse.results[0]));
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
+  const filterProductMovements = async (filter: any) => {
+    try {
+      await dispatch(loadFilter(filter));
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
+  const paginateProductMovements = async (page: number) => {
+    try {
+      await dispatch(loadFilteredPage(page));
+    } catch (error) {
+      console.error((error as Error).message);
+    }
+  };
+
+  const dashboardProductMovements = async () => {
+    try {
+      const serverAnalyticsResponse: any = await repo.readAnalytics(tokenToUse);
+      await dispatch(loadAnalytics(serverAnalyticsResponse.results));
     } catch (error) {
       console.error((error as Error).message);
     }
 
     try {
-      const serverCountResponse: any = await repo.countAll(
+      const serverCountResponse: any = await repo.readFilteredCount(
         tokenToUse,
-        "productmovements/count"
+        "productmovements/count",
+        "",
+        ""
       );
 
       await dispatch(loadUnfilteredCount(serverCountResponse.results[0]));
@@ -62,38 +89,13 @@ export function useProductMovements(repo: ProductMovementsRepo) {
     }
   };
 
-  const filter = async (filter: any) => {
-    try {
-      await dispatch(loadFilter(filter));
-    } catch (error) {
-      console.error((error as Error).message);
-    }
-  };
-
-  const pagination = async (page: number) => {
-    try {
-      await dispatch(loadPage(page));
-    } catch (error) {
-      console.error((error as Error).message);
-    }
-  };
-
-  const analytics = async () => {
-    try {
-      const serverAnalyticsResponse: any = await repo.readAnalytics(tokenToUse);
-      await dispatch(loadAnalytics(serverAnalyticsResponse.results));
-    } catch (error) {
-      console.error((error as Error).message);
-    }
-  };
-
   return {
     loadGallery,
-    loadCount,
-    loadPage,
+    loadFilteredCount,
+    loadFilteredPage,
     galleryProductMovement,
-    filter,
-    pagination,
-    analytics,
+    filterProductMovements,
+    paginateProductMovements,
+    dashboardProductMovements,
   };
 }

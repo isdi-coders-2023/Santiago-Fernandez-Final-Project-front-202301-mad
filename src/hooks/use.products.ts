@@ -3,12 +3,13 @@ import { ProductsRepo } from "../services/repositories/product.repo";
 import { AppDispatch, RootState } from "../store/store";
 import {
   loadGallery,
-  loadCount,
+  loadFilteredCount,
   loadDetail,
   loadDetailCredentials,
   loadFilterOptions,
   loadFilter,
-  loadPage,
+  loadFilteredPage,
+  loadUnFilteredCount,
 } from "../reducers/product.slice";
 import { ProductStructure } from "../models/product.model";
 
@@ -16,6 +17,7 @@ export function useProducts(repo: ProductsRepo) {
   const productStateData = useSelector(
     (state: RootState) => state.productState
   );
+
   const userStateData = useSelector((state: RootState) => state.userState);
   const dispatch = useDispatch<AppDispatch>();
   const tokenAtUserState = userStateData.userLoggedToken;
@@ -23,36 +25,47 @@ export function useProducts(repo: ProductsRepo) {
   const tokenToUse = tokenAtUserState;
 
   const galleryProduct = async () => {
-    const serverGalleryResponse: any = await repo.readGallery(
-      tokenToUse,
-      "products/gallery",
-      productStateData.filter
-    );
     try {
+      const serverGalleryResponse: any = await repo.readFilteredGallery(
+        tokenToUse,
+        "products/gallery",
+        productStateData.filter
+      );
+
       dispatch(loadGallery(serverGalleryResponse.results));
     } catch (error) {
       console.error((error as Error).message);
     }
 
-    const serverCountResponse: any = await repo.countProducts(
-      tokenToUse,
-      "products/count",
-      productStateData.filter.filterField,
-      productStateData.filter.filterValue
-    );
     try {
-      dispatch(loadCount(serverCountResponse.results[0]));
+      console.log(productStateData.filter);
+      const serverFilteredCountResponse: any = await repo.readFilteredCount(
+        tokenToUse,
+        "products/count",
+        productStateData.filter
+      );
+      console.log(productStateData.filter);
+      dispatch(loadFilteredCount(serverFilteredCountResponse.results[0]));
+
+      const serverUnFilteredCountResponse: any = await repo.readFilteredCount(
+        tokenToUse,
+        "products/count",
+        {}
+      );
+
+      dispatch(loadUnFilteredCount(serverUnFilteredCountResponse.results[0]));
     } catch (error) {
       console.error((error as Error).message);
     }
 
-    const serverGroupByFieldResponse: any = await repo.readGroupsByField(
-      // userState.userLoggedToken,
-      tokenToUse,
-      "products/group-values-per-field",
-      "brand"
-    );
     try {
+      const serverGroupByFieldResponse: any = await repo.readGroupsByField(
+        // userState.userLoggedToken,
+        tokenToUse,
+        "products/group-values-per-field",
+        "brand"
+      );
+
       dispatch(loadFilterOptions(serverGroupByFieldResponse.results));
     } catch (error) {
       console.error((error as Error).message);
@@ -64,18 +77,19 @@ export function useProducts(repo: ProductsRepo) {
   };
 
   const detail = async (id: string) => {
-    const serverDetailResponse: any = await repo.readDetail(
-      tokenToUse,
-      "products/" + id
-    );
     try {
+      const serverDetailResponse: any = await repo.readDetail(
+        tokenToUse,
+        "products/" + id
+      );
+
       await dispatch(loadDetail(serverDetailResponse.results));
     } catch (error) {
       console.error((error as Error).message);
     }
   };
 
-  const filter = async (filter: any) => {
+  const filterProducts = async (filter: any) => {
     try {
       await dispatch(loadFilter(filter));
     } catch (error) {
@@ -83,33 +97,33 @@ export function useProducts(repo: ProductsRepo) {
     }
   };
 
-  const pagination = async (page: number) => {
+  const paginateProducts = async (page: number) => {
     try {
-      await dispatch(loadPage(page));
+      await dispatch(loadFilteredPage(page));
     } catch (error) {
       console.error((error as Error).message);
     }
   };
 
-  const addSample = async (newProduct: Partial<ProductStructure>) => {
-    const serverDetailResponse: any = await repo.create(tokenToUse, newProduct);
+  const addSampleProducts = async (newProduct: Partial<ProductStructure>) => {
     try {
+      await repo.create(tokenToUse, newProduct);
     } catch (error) {
       console.error((error as Error).message);
     }
   };
 
-  const deleteByKey = async (query: { key: string; value: string }) => {
-    await repo.deleteByKey(tokenToUse, query.key, query.value);
+  const deleteByKeyProducts = async (query: { key: string; value: string }) => {
     try {
+      await repo.deleteByKey(tokenToUse, query.key, query.value);
     } catch (error) {
       console.error((error as Error).message);
     }
   };
 
-  const deleteById = async (id: string) => {
-    await repo.deleteById(tokenToUse, id);
+  const deleteByIdProducts = async (id: string) => {
     try {
+      await repo.deleteById(tokenToUse, id);
     } catch (error) {
       console.error((error as Error).message);
     }
@@ -117,17 +131,17 @@ export function useProducts(repo: ProductsRepo) {
 
   return {
     loadGallery,
-    loadCount,
+    loadFilteredCount,
     loadDetail,
     loadFilterOptions,
-    loadPage,
+    loadFilteredPage,
     galleryProduct,
     detailCredentials,
     detail,
-    filter,
-    pagination,
-    addSample,
-    deleteByKey,
-    deleteById,
+    filterProducts,
+    paginateProducts,
+    addSampleProducts,
+    deleteByKeyProducts,
+    deleteByIdProducts,
   };
 }

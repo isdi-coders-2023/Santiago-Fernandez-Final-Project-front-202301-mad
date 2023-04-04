@@ -5,11 +5,12 @@ import {
 import { url_def } from "../../config";
 
 type Filter = {
-  filterField: string;
-  filterValue: string;
-  filterSet: number;
-  filterRecordsPerSet: number;
-  orderField: string;
+  filterField?: string;
+  filterValue?: string;
+  filterSet?: number;
+  filterRecordsPerSet?: number;
+  orderField?: string;
+  orderType?: string;
 };
 
 export class ProductsRepo {
@@ -18,22 +19,29 @@ export class ProductsRepo {
     this.url = url_def;
   }
 
-  async readGallery(
+  async readFilteredGallery(
     token: string,
     urlExtraPath: string,
     filter: Filter
   ): Promise<ProductServerResponseType> {
     const url = this.url + "/" + urlExtraPath;
-
+    let filterObject;
+    filter.filterValue === "(select all)"
+      ? (filterObject = {
+          filterSet: filter.filterSet,
+          filterRecordsPerSet: filter.filterRecordsPerSet,
+          orderField: filter.orderField,
+        })
+      : (filterObject = {
+          filterField: filter.filterField,
+          filterValue: filter.filterValue,
+          filterSet: filter.filterSet,
+          filterRecordsPerSet: filter.filterRecordsPerSet,
+          orderField: filter.orderField,
+        });
     const resp = await fetch(url, {
       method: "POST",
-      body: JSON.stringify({
-        filterField: filter.filterField,
-        filterValue: filter.filterValue,
-        filterSet: filter.filterSet,
-        filterRecordsPerSet: filter.filterRecordsPerSet,
-        orderField: filter.orderField,
-      }),
+      body: JSON.stringify(filterObject),
       headers: {
         Authorization: "Bearer " + token,
         "Content-type": "application/json",
@@ -50,20 +58,23 @@ export class ProductsRepo {
     return data;
   }
 
-  async countProducts(
+  async readFilteredCount(
     token: string,
     urlExtraPath: string,
-    filterFieldReceived: string,
-    filterValueReceived: string
+    filter: Filter
   ): Promise<number> {
     const url = this.url + "/" + urlExtraPath;
+    let filterObject;
+    filter.filterValue === "(select all)"
+      ? (filterObject = {})
+      : (filterObject = {
+          filterField: filter.filterField,
+          filterValue: filter.filterValue,
+        });
 
     const resp = await fetch(url, {
       method: "POST",
-      body: JSON.stringify({
-        filterField: filterFieldReceived,
-        filterValue: filterValueReceived,
-      }),
+      body: JSON.stringify(filterObject),
       headers: {
         Authorization: "Bearer " + token,
         "Content-type": "application/json",
@@ -72,7 +83,7 @@ export class ProductsRepo {
 
     if (!resp.ok)
       throw new Error(
-        `Error http reading the count of products: ${resp.status} ${resp.statusText}`
+        `Error http reading the filtered count of products: ${resp.status} ${resp.statusText}`
       );
 
     const data = await resp.json();
@@ -108,7 +119,6 @@ export class ProductsRepo {
     field: string
   ): Promise<ProductServerResponseType> {
     const url = this.url + "/" + urlExtraPath + "/" + field;
-    console.log(url);
 
     const resp = await fetch(url, {
       method: "POST",
@@ -123,7 +133,7 @@ export class ProductsRepo {
       );
 
     const data = await resp.json();
-    console.log(data);
+
     return data;
   }
 

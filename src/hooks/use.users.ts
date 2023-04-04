@@ -53,10 +53,8 @@ export function useUsers(repo: UsersRepo) {
 
       await dispatch(loginToken(serverResponse.results[0]));
       await dispatch(loginUser(serverResponse.results[1]));
+      await localStorage.setItem("tokenERP", userLoggedToken);
 
-      if (userLoggedToken !== initialStateToken) {
-        await localStorage.setItem("tokenERP", userLoggedToken);
-      }
       const serverGalleryResponse: any = await repo.readGallery(
         localStorage.token,
         "users"

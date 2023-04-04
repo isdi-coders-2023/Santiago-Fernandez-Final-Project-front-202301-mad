@@ -11,8 +11,9 @@ export type ProductStateStructure = {
     orderField: string;
   };
   filterOptions: string[];
-  page: number;
-  count: number;
+  filteredPage: number;
+  filteredCount: number;
+  unFilteredCount: number;
   detailCredentials: string;
   detail: ProductStructure[];
 };
@@ -27,8 +28,9 @@ const initialState: ProductStateStructure = {
     orderField: "shortDescription",
   },
   filterOptions: ["Marca"],
-  page: 1,
-  count: 25,
+  filteredPage: 1,
+  filteredCount: 25,
+  unFilteredCount: 100,
   detailCredentials: "sku/unknown",
   detail: [],
 };
@@ -52,11 +54,24 @@ export const productSlice = createSlice({
     loadFilterOptions(state: ProductStateStructure, action: PayloadAction<[]>) {
       state.filterOptions = action.payload;
     },
-    loadPage(state: ProductStateStructure, action: PayloadAction<number>) {
-      state.page = action.payload;
+    loadFilteredPage(
+      state: ProductStateStructure,
+      action: PayloadAction<number>
+    ) {
+      state.filteredPage = action.payload;
     },
-    loadCount(state: ProductStateStructure, action: PayloadAction<number>) {
-      state.count = action.payload;
+    loadFilteredCount(
+      state: ProductStateStructure,
+      action: PayloadAction<number>
+    ) {
+      state.filteredCount = action.payload;
+    },
+
+    loadUnFilteredCount(
+      state: ProductStateStructure,
+      action: PayloadAction<number>
+    ) {
+      state.unFilteredCount = action.payload;
     },
     loadDetailCredentials(
       state: ProductStateStructure,
@@ -76,11 +91,12 @@ export const productSlice = createSlice({
 export const {
   loadGallery,
   loadFilter,
-  loadPage,
-  loadCount,
+  loadFilterOptions,
+  loadFilteredPage,
+  loadFilteredCount,
+  loadUnFilteredCount,
   loadDetailCredentials,
   loadDetail,
-  loadFilterOptions,
 } = productSlice.actions;
 
 export const productReducer = productSlice.reducer;

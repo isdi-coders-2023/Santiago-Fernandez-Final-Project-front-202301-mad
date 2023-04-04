@@ -4,10 +4,12 @@ import { MenuOption } from "../components/menu/menu";
 import { Login } from "../components/login/login";
 import DashboardPage from "../pages/dashboard/dashboard.page";
 import DetailPage from "../pages/detail/detail.page";
+import DetailPageWithoutMap from "../pages/detail/detail.page.without.map";
 import HomePage from "../pages/home/home.page";
 import MovementsPage from "../pages/movements/movements.page";
 import ProductsPage from "../pages/products/products.page";
-import { Filter } from "../pages/products/filter";
+
+// import { Filter } from "../pages/products/filter";
 
 // const HomePage = lazy(() => import("../pages/home/home.page"));
 // const DashboardPage = lazy(() => import("../pages/dashboard/dashboard.page"));
@@ -41,7 +43,7 @@ export function AppRouter({ options }: AppRouterProps) {
         path="/products/detail"
         element={<DetailPage></DetailPage>}
       ></Route>
-      <Route path="/products/filter" element={<Filter></Filter>}></Route>
+      {/* <Route path="/products/filter" element={<Filter></Filter>}></Route> */}
     </Routes>
     // </Suspense>
   );

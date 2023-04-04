@@ -18,11 +18,15 @@ export function Footer() {
   return (
     <div className="footer">
       <p>
-        {"Last 5 characters of the token: " + token.slice(token.length - 5)}
+        {"Last 5 characters of the token at State: " +
+          token.slice(token.length - 5)}
       </p>
       <p>{"Name: " + firstName + " " + lastName}</p>
       {/* <p>{errorToShow}</p> */}
-      <p>localStorage.setItem('tokenERP','Sin Token')</p>
+      <p>
+        {"Last 5 characters of the token at localStorage: " +
+          localStorage.getItem("tokenERP")}
+      </p>
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function MovementsPage() {
   );
 
   const pageNumber = useSelector(
-    (state: RootState) => state.productMovementState.page
+    (state: RootState) => state.productMovementState.filteredPage
   );
 
   const repoProductMovement = new ProductMovementsRepo();
@@ -42,19 +42,17 @@ export default function MovementsPage() {
 
   return (
     <>
-      <p className="productMovementsPage">Movements Page</p>
-
-      <div className="productMovementsPage_container">
-        <div className="productMovementsPage_fieldsRow">
-          <div className="productMovementsPage__tableTd">Fecha</div>
-          <div className="productMovementsPage__tableTd">Tipo</div>
-          <div className="productMovementsPage__tableTd">ID</div>
-          <div className="productMovementsPage__tableTd">SKU</div>
-          <div className="productMovementsPage__tableTd">Coste</div>
-          <div className="productMovementsPage__tableTd">Uds</div>
-        </div>
+      <div className="productMovementsPage__fieldContainer">
+        <div className="productMovementsPage__field">Date</div>
+        <div className="productMovementsPage__field">Type</div>
+        <div className="productMovementsPage__field">ID</div>
+        <div className="productMovementsPage__field">SKU</div>
+        <div className="productMovementsPage__field">Cost</div>
+        <div className="productMovementsPage__field">Units</div>
+      </div>
+      <div className="productMovementsPage__dataContainer">
         {filteredGalleryData.map((item) => (
-          <li className="productMovementsPage_fieldsRow" key={item.id}>
+          <li className="productMovementsPage__dataRow" key={item.id}>
             <div className="productMovementsPage__data">{item.date}</div>
             <div className="productMovementsPage__data">{item.type}</div>
             <div className="productMovementsPage__data">{item.typeId}</div>

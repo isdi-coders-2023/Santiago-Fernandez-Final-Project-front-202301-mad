@@ -1,4 +1,3 @@
-import React, { useRef } from "react";
 import { SyntheticEvent, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +9,13 @@ import "./filter.css";
 export function Filter() {
   const navigate = useNavigate();
   const repoProduct = useMemo(() => new ProductsRepo(), []);
-  const { filter, pagination, galleryProduct } = useProducts(repoProduct);
-  const filterOptionsArray = useSelector(
-    (state: RootState) => state.productState.filterOptions
-  );
+  const { filterProducts, paginateProducts } = useProducts(repoProduct);
+  const filterOptionsArray = [
+    ...useSelector((state: RootState) => state.productState.filterOptions),
+  ];
+
+  filterOptionsArray.push("(select all)");
+  const filterOptionsArrayWithAllAndOrdered = filterOptionsArray.sort();
 
   const filterValueDefault = useSelector(
     (state: RootState) => state.productState.filter.filterValue
@@ -28,11 +30,11 @@ export function Filter() {
   );
 
   const pageDefault = useSelector(
-    (state: RootState) => state.productState.page
+    (state: RootState) => state.productState.filteredPage
   );
 
   const orderByFields = ["brand", "ean", "id", "shortDescription", "sku"];
-  const recordsPerSetArray = [4, 8, 16, 32, 64, 128];
+  const recordsPerSetArray = [4, 8, 16, 32, 64, 128, 256];
 
   const handlerFilterSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,13 +48,15 @@ export function Filter() {
       filterRecordsPerSet: (formFilter.elements[2] as HTMLFormElement).value,
     };
 
-    filter(filterData);
-    pagination(1);
+    filterProducts(filterData);
+    paginateProducts(1);
 
     navigate("/products");
   };
 
-  const countData = useSelector((state: RootState) => state.productState.count);
+  const countData = useSelector(
+    (state: RootState) => state.productState.filteredCount
+  );
 
   const maximumPages =
     Math.floor(countData / filterRecordsPerSetDefault) <
@@ -60,13 +64,10 @@ export function Filter() {
       ? Math.floor(countData / filterRecordsPerSetDefault)
       : Math.floor(countData / filterRecordsPerSetDefault) + 1;
 
-  const pagesArray = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-  ];
-
-  const pagesArrayFiltered = pagesArray.filter(
-    (item) => item <= maximumPages + 1
-  );
+  const pagesArray = [];
+  for (let i = 1; i <= maximumPages + 1; i++) {
+    pagesArray.push(i);
+  }
 
   const handlerPaginationSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -76,7 +77,6 @@ export function Filter() {
       .value;
 
     const formFilter = document.forms[0];
-    console.log(formFilter);
 
     const filterData = {
       filterField: "brand",
@@ -86,8 +86,8 @@ export function Filter() {
       filterRecordsPerSet: (formFilter.elements[2] as HTMLFormElement).value,
     };
 
-    pagination(paginationData);
-    filter(filterData);
+    paginateProducts(paginationData);
+    filterProducts(filterData);
 
     navigate("/products");
   };
@@ -97,56 +97,60 @@ export function Filter() {
       <div className="filter_forms">
         <div>
           <form className="filter__form" onSubmit={handlerFilterSubmit}>
-            <label>Seleccionar marca:</label>
+            <label>Select a Brand:</label>
             <select
               name="marcas"
               className="filter__selectField"
               defaultValue={filterValueDefault}
             >
-              {filterOptionsArray.map((item: any) => (
+              {filterValueDefault}
+              {filterOptionsArrayWithAllAndOrdered.map((item: string) => (
                 <option className="filter__option" key={item}>
                   {item}
                 </option>
               ))}
             </select>
-            <label>Ordenar por:</label>
+            <label>Order by:</label>
             <select
               className="filter__orderByField"
               defaultValue={orderFieldDefault}
             >
+              {orderFieldDefault}
               {orderByFields.map((item) => (
                 <option className="filter__option" key={item}>
                   {item}
                 </option>
               ))}
             </select>
-            <label>Registros por página:</label>
+            <label>Records to show per page:</label>
             <select
               className="filter__recordsPerSet"
               defaultValue={filterRecordsPerSetDefault}
             >
+              {filterRecordsPerSetDefault}
               {recordsPerSetArray.map((item) => (
                 <option className="filter__option" key={item}>
                   {item}
                 </option>
               ))}
             </select>
-            <button className="filter__button">Filtrar</button>
+            <button className="filter__button">Filter</button>
           </form>
         </div>
         <div>
           <form className="pagination__form" onSubmit={handlerPaginationSubmit}>
-            <p>Registros filtrados: {countData}</p>
-            <p>Páginas disponibles: {maximumPages + 1}</p>
-            <p>Página mostrada: {pageDefault}</p>
+            <p>Filtered records: {countData}</p>
+            <p>Available pages: {maximumPages + 1}</p>
+            <p>Page shown: {pageDefault}</p>
             <select className="pagination__pages" defaultValue={pageDefault}>
-              {pagesArrayFiltered.map((item) => (
+              {pageDefault}
+              {pagesArray.map((item) => (
                 <option className="filter__option" key={item}>
                   {item}
                 </option>
               ))}
             </select>
-            <button className="filter__button">Ir a página</button>
+            <button className="filter__button">Go to page#</button>
           </form>
         </div>
       </div>
