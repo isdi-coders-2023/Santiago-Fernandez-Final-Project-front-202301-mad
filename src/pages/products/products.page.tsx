@@ -44,9 +44,9 @@ export default function ProductsPage() {
 
   const handlerClick = (event: SyntheticEvent) => {
     const valueToDetail =
-      event.currentTarget.innerHTML === null
+      event.currentTarget.ariaLabel === null
         ? "156450"
-        : event.currentTarget.innerHTML;
+        : event.currentTarget.ariaLabel;
     const keyToDetail = "sku";
 
     detailCredentials(keyToDetail + "/" + valueToDetail);
@@ -66,6 +66,9 @@ export default function ProductsPage() {
                   className="productsPageCard__image"
                   src={item.image}
                   alt={`${item.shortDescription} card`}
+                  aria-label={item.sku}
+                  onClick={handlerClick}
+                  title="click to see details"
                 ></img>
               </div>
               <div
@@ -79,7 +82,12 @@ export default function ProductsPage() {
                 <div>Marca: {item.brand}</div>
                 <div className="productsPageCard__skuContainer">
                   <p>SKU: </p>
-                  <p className="productsPageCard__sku" onClick={handlerClick}>
+                  <p
+                    className="productsPageCard__sku"
+                    aria-label={item.sku}
+                    onClick={handlerClick}
+                    title="click to see details"
+                  >
                     {item.sku}
                   </p>
                 </div>

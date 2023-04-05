@@ -25,21 +25,6 @@ export default function MovementsPage() {
     galleryProductMovement();
   }, [filterObject, pageNumber]);
 
-  const mock1 = [
-    {
-      id: "1",
-      productSku: "156449",
-      batch: "653",
-      date: "2015-01-09",
-      type: "Venta",
-      typeId: "801",
-      store: "AL01",
-      units: -24,
-      costPerUnit: 2.63,
-      pricePerUnit: 4.37,
-    },
-  ];
-
   return (
     <>
       <div className="productMovementsPage__fieldContainer">
