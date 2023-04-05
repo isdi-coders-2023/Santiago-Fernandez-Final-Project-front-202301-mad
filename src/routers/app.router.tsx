@@ -8,6 +8,7 @@ import DetailPageWithoutMap from "../pages/detail/detail.page.without.map";
 import HomePage from "../pages/home/home.page";
 import MovementsPage from "../pages/movements/movements.page";
 import ProductsPage from "../pages/products/products.page";
+import { ErrorLog } from "../components/errorlog/errorlog";
 
 // import { Filter } from "../pages/products/filter";
 
@@ -43,6 +44,7 @@ export function AppRouter({ options }: AppRouterProps) {
         path="/products/detail"
         element={<DetailPage></DetailPage>}
       ></Route>
+      <Route path="/errorlog" element={<ErrorLog></ErrorLog>}></Route>
       {/* <Route path="/products/filter" element={<Filter></Filter>}></Route> */}
     </Routes>
     // </Suspense>

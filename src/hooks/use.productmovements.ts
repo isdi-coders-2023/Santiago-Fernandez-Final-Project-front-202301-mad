@@ -10,6 +10,7 @@ import {
 } from "../reducers/productmovement.slice";
 
 import { ProductMovementsRepo } from "../services/repositories/productmovement.repo";
+import { useApp } from "./use.app";
 
 export function useProductMovements(repo: ProductMovementsRepo) {
   const productMovementStateData = useSelector(
@@ -24,6 +25,8 @@ export function useProductMovements(repo: ProductMovementsRepo) {
   const tokenToUse =
     tokenAtUserState === "Sin Token" ? tokenAtLocalStorage : tokenAtUserState;
 
+  const { addError } = useApp();
+
   const galleryProductMovement = async () => {
     try {
       const serverGalleryResponse: any = await repo.readFilteredGallery(
@@ -35,6 +38,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
       await dispatch(loadGallery(serverGalleryResponse.results));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/productmovements");
     }
 
     try {
@@ -48,6 +52,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
       await dispatch(loadFilteredCount(serverCountResponse.results[0]));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/productmovements");
     }
   };
 
@@ -56,6 +61,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
       await dispatch(loadFilter(filter));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/productmovements");
     }
   };
 
@@ -64,6 +70,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
       await dispatch(loadFilteredPage(page));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/productmovements");
     }
   };
 
@@ -73,6 +80,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
       await dispatch(loadAnalytics(serverAnalyticsResponse.results));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/dashboard");
     }
 
     try {
@@ -86,6 +94,7 @@ export function useProductMovements(repo: ProductMovementsRepo) {
       await dispatch(loadUnfilteredCount(serverCountResponse.results[0]));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/productmovements");
     }
   };
 

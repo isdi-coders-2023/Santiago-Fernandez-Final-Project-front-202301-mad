@@ -9,15 +9,16 @@ import {
   loginUser,
   logoutToken,
 } from "../reducers/user.slice";
+import { useApp } from "./use.app";
 
 export function useUsers(repo: UsersRepo) {
   const userLoggedToken = useSelector(
     (state: RootState) => state.userState.userLoggedToken
   );
 
-  const initialStateToken = initialState.userLoggedToken;
-
   const dispatch = useDispatch<AppDispatch>();
+
+  const { addError } = useApp();
 
   const userLogin = async (loginForm: Partial<UserStructure>) => {
     try {
@@ -38,6 +39,7 @@ export function useUsers(repo: UsersRepo) {
       await dispatch(loginGallery(serverGalleryResponse.results));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/home");
     }
   };
 
@@ -63,6 +65,7 @@ export function useUsers(repo: UsersRepo) {
     } catch (error) {
       localStorage.setItem("tokenERP", "Sin Token");
       console.error((error as Error).message);
+      addError(error as Error, "/home");
     }
   };
 
@@ -72,6 +75,7 @@ export function useUsers(repo: UsersRepo) {
       await dispatch(loginUser(initialState.userLogged));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/home");
     }
   };
 

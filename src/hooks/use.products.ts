@@ -12,6 +12,7 @@ import {
   loadUnFilteredCount,
 } from "../reducers/product.slice";
 import { ProductStructure } from "../models/product.model";
+import { useApp } from "./use.app";
 
 export function useProducts(repo: ProductsRepo) {
   const productStateData = useSelector(
@@ -24,6 +25,8 @@ export function useProducts(repo: ProductsRepo) {
 
   const tokenToUse = tokenAtUserState;
 
+  const { addError } = useApp();
+
   const galleryProduct = async () => {
     try {
       const serverGalleryResponse: any = await repo.readFilteredGallery(
@@ -35,6 +38,7 @@ export function useProducts(repo: ProductsRepo) {
       dispatch(loadGallery(serverGalleryResponse.results));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products");
     }
 
     try {
@@ -56,6 +60,7 @@ export function useProducts(repo: ProductsRepo) {
       dispatch(loadUnFilteredCount(serverUnFilteredCountResponse.results[0]));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products");
     }
 
     try {
@@ -69,6 +74,7 @@ export function useProducts(repo: ProductsRepo) {
       dispatch(loadFilterOptions(serverGroupByFieldResponse.results));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products");
     }
   };
 
@@ -86,6 +92,7 @@ export function useProducts(repo: ProductsRepo) {
       await dispatch(loadDetail(serverDetailResponse.results));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products");
     }
   };
 
@@ -94,6 +101,7 @@ export function useProducts(repo: ProductsRepo) {
       await dispatch(loadFilter(filter));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products");
     }
   };
 
@@ -102,6 +110,7 @@ export function useProducts(repo: ProductsRepo) {
       await dispatch(loadFilteredPage(page));
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products");
     }
   };
 
@@ -110,6 +119,7 @@ export function useProducts(repo: ProductsRepo) {
       await repo.create(tokenToUse, newProduct);
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products/detail");
     }
   };
 
@@ -118,6 +128,7 @@ export function useProducts(repo: ProductsRepo) {
       await repo.deleteByKey(tokenToUse, query.key, query.value);
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products/detail");
     }
   };
 
@@ -126,6 +137,7 @@ export function useProducts(repo: ProductsRepo) {
       await repo.deleteById(tokenToUse, id);
     } catch (error) {
       console.error((error as Error).message);
+      addError(error as Error, "/products/detail");
     }
   };
 
