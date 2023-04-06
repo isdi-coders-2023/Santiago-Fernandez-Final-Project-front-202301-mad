@@ -33,7 +33,15 @@ export function Filter() {
     (state: RootState) => state.productState.filteredPage
   );
 
-  const orderByFields = ["brand", "ean", "id", "shortDescription", "sku"];
+  const filteredGalleryArray = useSelector(
+    (state: RootState) => state.productState.filteredGallery
+  );
+
+  const fieldsAtProductCollection = Object.keys(filteredGalleryArray[0]);
+  const orderedFieldsAtProductCollection = fieldsAtProductCollection.sort();
+
+  // const orderByFields = ["brand", "ean", "id", "shortDescription", "sku"];
+  const orderByFields = orderedFieldsAtProductCollection;
   const recordsPerSetArray = [4, 8, 16, 32, 64, 128, 256];
 
   const handlerFilterSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
