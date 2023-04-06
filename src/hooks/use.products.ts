@@ -48,7 +48,7 @@ export function useProducts(repo: ProductsRepo) {
         "products/count",
         productStateData.filter
       );
-      console.log(productStateData.filter);
+
       dispatch(loadFilteredCount(serverFilteredCountResponse.results[0]));
 
       const serverUnFilteredCountResponse: any = await repo.readFilteredCount(
