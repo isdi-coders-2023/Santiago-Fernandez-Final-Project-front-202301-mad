@@ -8,7 +8,10 @@
   margin-top: 0.1rem;
   width: 100%;
 }
-
+.productMovementsPage__field {
+  text-align: left;
+  font-size: 0.8rem;
+}
 .productMovementsPage__dataContainer {
   display: flex;
   flex-direction: column;
@@ -30,11 +33,10 @@
   width: 100%;
 }
 
-.productMovementsPage__data,
-.productMovementsPage__field {
+.productMovementsPage__data {
   text-align: left;
   font-size: 0.8rem;
   border-style: solid;
-  border-width: 0.2px;
+  border-width: 0.1px;
   width: 20%;
 }

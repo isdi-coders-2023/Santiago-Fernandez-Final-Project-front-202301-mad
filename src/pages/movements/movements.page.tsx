@@ -30,7 +30,7 @@ export default function MovementsPage() {
       <div className="productMovementsPage__fieldContainer">
         <div className="productMovementsPage__field">Date</div>
         <div className="productMovementsPage__field">Type</div>
-        <div className="productMovementsPage__field">ID</div>
+        <div className="productMovementsPage__field">Type ID</div>
         <div className="productMovementsPage__field">SKU</div>
         <div className="productMovementsPage__field">Cost</div>
         <div className="productMovementsPage__field">Units</div>
