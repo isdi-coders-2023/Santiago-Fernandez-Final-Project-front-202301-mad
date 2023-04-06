@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useProducts } from "../../hooks/use.products";
 import { ProductsRepo } from "../../services/repositories/product.repo";
 import { RootState } from "../../store/store";
+import { ProductStructure } from "../../models/product.model";
 import "./filter.css";
 
 export function Filter() {
@@ -37,11 +38,17 @@ export function Filter() {
     (state: RootState) => state.productState.filteredGallery
   );
 
-  const fieldsAtProductCollection = Object.keys(filteredGalleryArray[0]);
-  const orderedFieldsAtProductCollection = fieldsAtProductCollection.sort();
-
-  // const orderByFields = ["brand", "ean", "id", "shortDescription", "sku"];
-  const orderByFields = orderedFieldsAtProductCollection;
+  const orderByFieldsDefault = [
+    "brand",
+    "ean",
+    "id",
+    "shortDescription",
+    "sku",
+  ];
+  const orderByFields =
+    filteredGalleryArray[0] === undefined
+      ? orderByFieldsDefault
+      : Object.keys(filteredGalleryArray[0]).sort();
   const recordsPerSetArray = [4, 8, 16, 32, 64, 128, 256];
 
   const handlerFilterSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
