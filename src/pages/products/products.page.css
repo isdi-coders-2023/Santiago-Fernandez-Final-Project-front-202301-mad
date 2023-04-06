@@ -44,8 +44,8 @@
 }
 
 .productsPageCard__image:hover {
-  max-height: 20vh;
-  margin-bottom: 1rem;
+  /* max-height: 20vh;
+  margin-bottom: 1rem; */
 }
 
 .productsPageCard__shortDescription {
