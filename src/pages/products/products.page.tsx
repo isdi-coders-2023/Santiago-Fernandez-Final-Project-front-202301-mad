@@ -1,23 +1,16 @@
 import "./products.page.css";
-
 import { SyntheticEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
-
 import { useProducts } from "../../hooks/use.products";
 import { ProductStructure } from "../../models/product.model";
 import { ProductsRepo } from "../../services/repositories/product.repo";
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { Filter } from "../../components/filter/filter";
-// import { Filter } from "./filter";
 
 export default function ProductsPage() {
   const galleryArray = useSelector(
     (state: RootState) => state.productState.filteredGallery
-  );
-
-  const detailArray = useSelector(
-    (state: RootState) => state.productState.detail
   );
 
   const filterObject = useSelector(
@@ -26,10 +19,6 @@ export default function ProductsPage() {
 
   const pageNumber = useSelector(
     (state: RootState) => state.productState.filteredPage
-  );
-
-  const detailProductData = useSelector(
-    (state: RootState) => state.productState.detail
   );
 
   const repoProduct = new ProductsRepo();
@@ -45,7 +34,7 @@ export default function ProductsPage() {
   const handlerClick = (event: SyntheticEvent) => {
     const valueToDetail =
       event.currentTarget.ariaLabel === null
-        ? "156450"
+        ? ""
         : event.currentTarget.ariaLabel;
     const keyToDetail = "sku";
 
