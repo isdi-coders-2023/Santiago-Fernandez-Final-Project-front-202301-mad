@@ -42,14 +42,13 @@ export function useProducts(repo: ProductsRepo) {
     }
 
     try {
-      console.log(productStateData.filter);
       const serverFilteredCountResponse: any = await repo.readFilteredCount(
         tokenToUse,
         "products/count",
         productStateData.filter
       );
 
-      dispatch(loadFilteredCount(serverFilteredCountResponse.results[0]));
+      await dispatch(loadFilteredCount(serverFilteredCountResponse.results[0]));
 
       const serverUnFilteredCountResponse: any = await repo.readFilteredCount(
         tokenToUse,
@@ -57,7 +56,9 @@ export function useProducts(repo: ProductsRepo) {
         {}
       );
 
-      dispatch(loadUnFilteredCount(serverUnFilteredCountResponse.results[0]));
+      await dispatch(
+        loadUnFilteredCount(serverUnFilteredCountResponse.results[0])
+      );
     } catch (error) {
       console.error((error as Error).message);
       addError(error as Error, "/products");
@@ -71,7 +72,7 @@ export function useProducts(repo: ProductsRepo) {
         "brand"
       );
 
-      dispatch(loadFilterOptions(serverGroupByFieldResponse.results));
+      await dispatch(loadFilterOptions(serverGroupByFieldResponse.results));
     } catch (error) {
       console.error((error as Error).message);
       addError(error as Error, "/products");
@@ -96,18 +97,18 @@ export function useProducts(repo: ProductsRepo) {
     }
   };
 
-  const filterProducts = async (filter: any) => {
+  const filterProducts = (filter: any) => {
     try {
-      await dispatch(loadFilter(filter));
+      dispatch(loadFilter(filter));
     } catch (error) {
       console.error((error as Error).message);
       addError(error as Error, "/products");
     }
   };
 
-  const paginateProducts = async (page: number) => {
+  const paginateProducts = (page: number) => {
     try {
-      await dispatch(loadFilteredPage(page));
+      dispatch(loadFilteredPage(page));
     } catch (error) {
       console.error((error as Error).message);
       addError(error as Error, "/products");
