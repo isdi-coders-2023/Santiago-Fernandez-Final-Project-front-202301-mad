@@ -1,25 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { menuOptions, MenuStructure } from "../models/menu.model";
+import { menuOptions, MenuOption } from "../components/menu/menu";
 import { UserStructure } from "../models/user.model";
 
 export type UserStateStructure = {
   userLoggedToken: string;
   userLogged: UserStructure;
-  userLoggedMenuOptions: Partial<MenuStructure>[];
+  userLoggedMenuOptions: MenuOption[];
   userLoggedInitials: string;
-  users: UserStructure[];
+  usersGallery: UserStructure[];
 };
 
-const initialState: UserStateStructure = {
-  userLoggedToken: "Sin Token",
+export const initialState: UserStateStructure = {
+  userLoggedToken: "No Token",
   userLogged: {} as UserStructure,
   userLoggedMenuOptions: menuOptions,
   userLoggedInitials: "",
-  users: [],
+  usersGallery: [],
 };
 
 export const userSlice = createSlice({
-  name: "users",
+  name: "user",
   initialState,
   reducers: {
     loginToken(state: UserStateStructure, action: PayloadAction<string>) {
@@ -28,9 +28,19 @@ export const userSlice = createSlice({
     loginUser(state: UserStateStructure, action: PayloadAction<UserStructure>) {
       state.userLogged = action.payload;
     },
+    loginGallery(
+      state: UserStateStructure,
+      action: PayloadAction<UserStructure[]>
+    ) {
+      state.usersGallery = action.payload;
+    },
+    logoutToken(state: UserStateStructure, action: PayloadAction<string>) {
+      state.userLoggedToken = action.payload;
+    },
   },
 });
 
-export const { loginToken, loginUser } = userSlice.actions;
+export const { loginToken, loginUser, loginGallery, logoutToken } =
+  userSlice.actions;
 
 export const userReducer = userSlice.reducer;

@@ -19,7 +19,8 @@ describe("Given the useUsers hook", () => {
     } as unknown as UserStructure;
 
     mockRepo = {
-      loginAtUsersRepo: jest.fn(),
+      readTokenAndUser: jest.fn(),
+      readGallery: jest.fn(),
     } as unknown as UsersRepo;
 
     const TestComponent = function () {
@@ -52,7 +53,8 @@ describe("Given the useUsers hook", () => {
     test("then the userLogin should be called", async () => {
       const elements = await screen.findAllByRole("button");
       await act(async () => userEvent.click(elements[0]));
-      expect(mockRepo.loginAtUsersRepo).toHaveBeenCalled();
+      expect(mockRepo.readTokenAndUser).toHaveBeenCalled();
+      expect(mockRepo.readGallery).toHaveBeenCalled();
     });
   });
 });

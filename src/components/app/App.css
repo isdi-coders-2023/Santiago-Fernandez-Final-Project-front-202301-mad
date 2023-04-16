@@ -1,4 +1,11 @@
 .App {
-  text-align: center;
-  background-color: #e7e6e6;
+  /* text-align: center; */
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.approuter_container {
+  min-height: calc(100vh - 17vh);
+  width: 98%;
+  /* max-height: calc(100vh - 24vh); */
 }
