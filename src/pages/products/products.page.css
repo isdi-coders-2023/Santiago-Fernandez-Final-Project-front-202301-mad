@@ -2,7 +2,6 @@
   background-color: white;
   width: 100%;
   height: 70vh;
-  /* overflow:scroll; */
   overflow-y: scroll;
   padding-top: 1vh;
   font-size: 2vh;
@@ -10,13 +9,12 @@
 
 .productsPage__list {
   border-color: black;
-
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 1rem;
-  margin: 0 auto; /* Centrar la galería en la página */
+  margin: 0 auto;
 }
 
 .productsPageCard {
@@ -25,8 +23,8 @@
   border-width: 0.2px;
   border-color: #4472c4;
   border-radius: 2%;
-  max-width: 20%; /* Ancho máximo de cada tarjeta */
-  height: 25%; /* Altura fija de cada tarjeta */
+  max-width: 20%;
+  height: 25%;
   padding: 0.5rem;
   text-align: left;
   text-decoration: none;
@@ -44,8 +42,9 @@
 }
 
 .productsPageCard__image:hover {
-  /* max-height: 20vh;
-  margin-bottom: 1rem; */
+  border-style: solid;
+  border-width: 0.2px;
+  border-color: #4472c4;
 }
 
 .productsPageCard__shortDescription {
@@ -56,13 +55,11 @@
   display: flex;
 }
 .productsPageCard__sku {
-  text-decoration: underline;
   color: rgb(2, 2, 32);
   font-weight: bold;
 }
 
 .productsPageCard__sku:hover {
   text-decoration: underline;
-
   color: #4472c4;
 }
