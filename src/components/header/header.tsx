@@ -3,18 +3,16 @@ import "./header.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { menuOptions } from "../../components/menu/menu";
-import { SyntheticEvent, useEffect } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useUsers } from "../../hooks/use.users";
 import { UsersRepo } from "../../services/repositories/user.repo";
 import { Link, useNavigate } from "react-router-dom";
+import { initialState as initialUserState } from "../../reducers/user.slice";
 
 export function Header() {
   const repoUser = new UsersRepo();
   const { userLogout } = useUsers(repoUser);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   userLogin({});
-  // }, []);
 
   const firstName = useSelector(
     (state: RootState) => state.userState.userLogged.firstName
@@ -25,7 +23,7 @@ export function Header() {
   );
 
   const handlerClick = (event: SyntheticEvent) => {
-    localStorage.setItem("tokenERP", "Sin Token");
+    localStorage.setItem("tokenERP", initialUserState.userLoggedToken);
     userLogout();
 
     navigate("/");
@@ -44,8 +42,8 @@ export function Header() {
       <div className="header__initialAndLogout">
         <div className="header__userLoggedInitials">{firstName}</div>
 
-        {userLoggedTokenData !== "Sin Token" ||
-        localStorage.tokenERP !== "Sin Token" ? (
+        {userLoggedTokenData !== initialUserState.userLoggedToken ||
+        localStorage.tokenERP !== initialUserState.userLoggedToken ? (
           <div className="header__logout" onClick={handlerClick}>
             logout
           </div>

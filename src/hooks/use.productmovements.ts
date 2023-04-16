@@ -9,6 +9,8 @@ import {
   loadUnfilteredCount,
 } from "../reducers/productmovement.slice";
 
+import { initialState as initialUserState } from "../reducers/user.slice";
+
 import { ProductMovementsRepo } from "../services/repositories/productmovement.repo";
 import { useApp } from "./use.app";
 
@@ -23,7 +25,9 @@ export function useProductMovements(repo: ProductMovementsRepo) {
   const tokenAtUserState = userStateData.userLoggedToken;
 
   const tokenToUse =
-    tokenAtUserState === "Sin Token" ? tokenAtLocalStorage : tokenAtUserState;
+    tokenAtUserState === initialUserState.userLoggedToken
+      ? tokenAtLocalStorage
+      : tokenAtUserState;
 
   const { addError } = useApp();
 
@@ -56,18 +60,18 @@ export function useProductMovements(repo: ProductMovementsRepo) {
     }
   };
 
-  const filterProductMovements = async (filter: any) => {
+  const filterProductMovements = (filter: any) => {
     try {
-      await dispatch(loadFilter(filter));
+      dispatch(loadFilter(filter));
     } catch (error) {
       console.error((error as Error).message);
       addError(error as Error, "/productmovements");
     }
   };
 
-  const paginateProductMovements = async (page: number) => {
+  const paginateProductMovements = (page: number) => {
     try {
-      await dispatch(loadFilteredPage(page));
+      dispatch(loadFilteredPage(page));
     } catch (error) {
       console.error((error as Error).message);
       addError(error as Error, "/productmovements");

@@ -1,21 +1,17 @@
 import { SyntheticEvent, useEffect, useMemo } from "react";
-// import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { useProducts } from "../../hooks/use.products";
+import { useNavigate } from "react-router-dom";
 import { useUsers } from "../../hooks/use.users";
 import { UserStructure } from "../../models/user.model";
-import { ProductsRepo } from "../../services/repositories/product.repo";
 import { UsersRepo } from "../../services/repositories/user.repo";
 import "./login.css";
+import { initialState as initialUserState } from "../../reducers/user.slice";
 
 export function Login() {
   const repoUser = useMemo(() => new UsersRepo(), []);
-  const repoProduct = useMemo(() => new ProductsRepo(), []);
 
   const navigate = useNavigate();
 
   const { userLogin, userLoginWithToken } = useUsers(repoUser);
-  const { galleryProduct } = useProducts(repoProduct);
 
   useEffect(() => {
     if (
@@ -23,12 +19,11 @@ export function Login() {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     ) {
       userLoginWithToken(localStorage.tokenERP, "users/login-with-token");
-      if (localStorage.tokenERP === "Sin Token") navigate("/");
+      if (localStorage.tokenERP === initialUserState.userLoggedToken)
+        navigate("/");
       navigate("/home");
     }
   }, []);
-
-  //Para settear localStorage.setItem('tokenERP','Sin Token')
 
   const handlerSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();

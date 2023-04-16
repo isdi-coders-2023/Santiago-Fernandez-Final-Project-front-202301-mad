@@ -3,7 +3,7 @@ import { UserStructure } from "../models/user.model";
 import { UsersRepo } from "../services/repositories/user.repo";
 import { AppDispatch, RootState } from "../store/store";
 import {
-  initialState,
+  initialState as initialUserState,
   loginGallery,
   loginToken,
   loginUser,
@@ -29,7 +29,6 @@ export function useUsers(repo: UsersRepo) {
 
       await dispatch(loginToken(serverLoginResponse.results[0]));
       await dispatch(loginUser(serverLoginResponse.results[1]));
-
       await localStorage.setItem("tokenERP", userLoggedToken);
 
       const serverGalleryResponse: any = await repo.readGallery(
@@ -63,16 +62,16 @@ export function useUsers(repo: UsersRepo) {
       );
       await dispatch(loginGallery(serverGalleryResponse.results));
     } catch (error) {
-      localStorage.setItem("tokenERP", "Sin Token");
+      localStorage.setItem("tokenERP", initialUserState.userLoggedToken);
       console.error((error as Error).message);
       addError(error as Error, "/home");
     }
   };
 
-  const userLogout = async () => {
+  const userLogout = () => {
     try {
-      await dispatch(logoutToken("Sin Token"));
-      await dispatch(loginUser(initialState.userLogged));
+      dispatch(logoutToken(initialUserState.userLoggedToken));
+      dispatch(loginUser(initialUserState.userLogged));
     } catch (error) {
       console.error((error as Error).message);
       addError(error as Error, "/home");

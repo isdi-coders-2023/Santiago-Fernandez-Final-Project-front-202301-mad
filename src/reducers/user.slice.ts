@@ -11,7 +11,7 @@ export type UserStateStructure = {
 };
 
 export const initialState: UserStateStructure = {
-  userLoggedToken: "Sin Token",
+  userLoggedToken: "No Token",
   userLogged: {} as UserStructure,
   userLoggedMenuOptions: menuOptions,
   userLoggedInitials: "",
