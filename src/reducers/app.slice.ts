@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type ErrorLog = {
-  date: Date;
+  date: string;
   user: string;
   origin: string;
   errorName: string;
@@ -11,12 +11,13 @@ export type ErrorLog = {
 };
 export type AppStateStructure = {
   errorLog: ErrorLog[];
+  urlPage: string;
 };
 
 export const initialState: AppStateStructure = {
   errorLog: [
     {
-      date: new Date("2024-01-01T00:00:00"),
+      date: new Date().toString(),
       user: "Initial",
       origin: "Initial",
       errorName: "Initial",
@@ -25,6 +26,7 @@ export const initialState: AppStateStructure = {
       errorCause: "Initial",
     },
   ],
+  urlPage: "",
 };
 
 export const appSlice = createSlice({
@@ -34,9 +36,12 @@ export const appSlice = createSlice({
     addErrorLog(state: AppStateStructure, action: PayloadAction<ErrorLog>) {
       state.errorLog.push(action.payload);
     },
+    updateUrlPage(state: AppStateStructure, action: PayloadAction<string>) {
+      state.urlPage = action.payload;
+    },
   },
 });
 
-export const { addErrorLog } = appSlice.actions;
+export const { addErrorLog, updateUrlPage } = appSlice.actions;
 
 export const appReducer = appSlice.reducer;

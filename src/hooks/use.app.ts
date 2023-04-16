@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-import { addErrorLog } from "../reducers/app.slice";
+import { addErrorLog, updateUrlPage } from "../reducers/app.slice";
 import { useNavigate } from "react-router-dom";
 
 export function useApp() {
@@ -14,7 +14,7 @@ export function useApp() {
   const addError = (error: Error, origin: string) => {
     dispatch(
       addErrorLog({
-        date: new Date(),
+        date: new Date().toString(),
         user: userLoggedData.email,
         origin: origin,
         errorName: error.name,
@@ -26,8 +26,14 @@ export function useApp() {
     navigate("/errorlog");
   };
 
+  const updateUrl = (url: string) => {
+    dispatch(updateUrlPage(url));
+  };
+
   return {
     addError,
+    updateUrl,
     addErrorLog,
+    updateUrlPage,
   };
 }
